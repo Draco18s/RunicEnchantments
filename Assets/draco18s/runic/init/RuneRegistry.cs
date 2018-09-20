@@ -11,8 +11,17 @@ namespace Assets.draco18s.runic.init {
 		public static void Initialize() {
 			ALL_RUNES = new Dictionary<char, IExecutableRune>();
 			for(int i = 0; i < 10; i++) {
-				new RuneNumber(i).Register();
+				new RuneNumber(i,i.ToString()[0]).Register();
 			}
+			new RuneNumber(10, 'a').Register();
+			new RuneNumber(11, 'b').Register();
+			new RuneNumber(12, 'c').Register();
+			new RuneNumber(13, 'd').Register();
+			new RuneNumber(14, 'e').Register();
+			new RuneNumber(15, 'f').Register();
+			new RunePi(Math.PI, 'π').Register();
+			new RunePi(Math.PI, 'P').Register();
+
 			new RuneBlank().Register();
 			new RuneEntrySimple(Direction.LEFT,  '<').Register();
 			new RuneEntrySimple(Direction.RIGHT, '>').Register();
@@ -24,6 +33,7 @@ namespace Assets.draco18s.runic.init {
 			new RuneSubtraction().Register();
 			new RuneMultiplication().Register();
 			new RuneDivision().Register();
+			new RuneModulo().Register();
 			new RuneTerminator().Register();
 			new RuneMinMana().Register();
 			new RuneDiagonalReflector('/').Register();
@@ -61,6 +71,36 @@ namespace Assets.draco18s.runic.init {
 			new RuneVec3().Register();
 			new RuneDistance().Register();
 			new RunePower().Register();
+			new RuneTenHundred(10, 'X').Register();
+			new RuneTenHundred(100, 'C').Register();
+			new RuneTenHundred(1000, 'Y').Register();
+			new RuneFork(Direction.LEFT,  '↤').Register();
+			new RuneFork(Direction.RIGHT, '↦').Register();
+			new RuneFork(Direction.UP,    '↥').Register();
+			new RuneFork(Direction.DOWN,  '↧').Register();
+			new RuneFork(Direction.LEFT,  'H').Register();
+			new RuneFork(Direction.RIGHT, 'K').Register();
+			new RuneFork(Direction.UP,    'I').Register();
+			new RuneFork(Direction.DOWN,  'J').Register();
+			new RuneFizzle().Register();
+			new RuneDelay().Register();
+			new RuneReadChar().Register();
+			new RuneReadString().Register();
+			new RuneToChar().Register();
+			new RuneToValue().Register();
+			new RuneReadCharContinuous().Register();
+			new RuneGetObject().Register();
+			new RuneInstantiate().Register();
+		}
+
+		public static char GetRuneChar(IExecutableRune rune) {
+			foreach(KeyValuePair<char,IExecutableRune> pair in ALL_RUNES) {
+				if(pair.Value == rune) return pair.Key;
+			}
+			if(rune is RuneCharLiteral) {
+				return ((RuneCharLiteral)rune).c;
+			}
+			return ' ';
 		}
 
 		public static IExecutableRune GetRune(char cat) {

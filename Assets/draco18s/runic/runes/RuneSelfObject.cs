@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneSelfObject : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
-			pointer.Push(go);
+		public bool Execute(Pointer pointer, ExecutionContext context) {
+			pointer.Push(context.self);
 			return true;
 		}
 

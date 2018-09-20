@@ -11,7 +11,7 @@ namespace Assets.draco18s.runic.runes {
 			this.dir = dir;
 			this.c = c;
 		}
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			pointer.direction = dir;
 			return true;
 		}

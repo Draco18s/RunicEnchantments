@@ -12,7 +12,7 @@ namespace Assets.draco18s.runic.runes {
 			this.c = c;
 		}
 
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			pointer.RotateStack(rotLeft);
 			return true;
 		}

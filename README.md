@@ -8,13 +8,16 @@ Runic script is a 2D interpreted language with multiple simultaneously processed
 |-------------------|--------------------------|------------------|
 |` `| Empty | NOP - Nothing happens. IP will advance to the next cell. |
 |`0`-`9`| Integer Literals | Pushes the single digit value onto the stack |
-|`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo. These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product |
+|`a`-`f`| Integer Literals | Literals for the values 10-15 |
+|`P`| Pi | Pushes the value of Pi onto the stack |
+|`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo. These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP. |
 |`Z`| Negate | Multiplies the top value on the stack by -1 |
-|`p`| Power | Pops two values `x` and `y` and pushes `x^y` (`x` raised to th3 power `y`) onto the stack (e.g. `>33p$;` will print `27`) |
+|`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
 |`>` `<` `^` `v`| Simple Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
-|`$` `@`| Output | `$` prints the top value of the stack to Debug.Log. `@` dumps the entire stack |
+|`$` `@`| Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
 |`;`| Terminator | Destroys an IP |
 |`m`| Mana | Pushes the current mana value onto the stack |
+|`F`| Fizzle | Deducts 1 mana from the IP |
 |`M`| Min Mana | Acts as a threshold barrier. The top value of the stack is popped and compared to the IP's mana. If the mana is greater than the popped value, the IP advances. Otherwise the value is pushed back. |
 |`\` `/` `\|` `_` `#`| Reflectors | Changes the direction of an IP |
 |`U` `D` `L` `R`| Direction | Changes the pointers direction UP, DOWN, LEFT, RIGHT respectively. Can also use `↑` `↓` `←` `→` |
@@ -25,18 +28,34 @@ Runic script is a 2D interpreted language with multiple simultaneously processed
 |`s`| Swap N | Pops a value off the stack, then pops that many values off the stack, rotates them right one, and pushes them back.  (e.g. if your stack is [1,2,3,4,3], calling `s` results in [1,4,2,3]) |
 |`r`| Reverse | Reverses the stack |
 |`l`| Length | Pushes the current length of the stack onto the stack |
+|`y`| Delay | IP NOPs and does not advance once |
 |`=`| Equals | Pops `x` and `y` and pushes `1` if they are equal, `0` otherwise |
 |`(` `)`| Less and Greater | Less than and Greater than respectively. Pushes `1` if true, pushes `0` otherwise |
 |`!`| Trampoline | Skips the next instruction |
 |`?`| Conditional Trampoline | Pops the top value of the stack. If it is non-zero (or non-null for reference types), skip the next instruction |
+|`V`| Vector3 | Pops three values `x`,`y`,`z` off the stack and pushes a resulting Vector3 onto the stack |
+|`j`| Distance | Pops two GameObject or Vector3 off the stack and computes their distance |
+|`'`| Character literal | Next cell is read as a literal character |
+|`"`| Strign literal | IP enters reading mode and reads all cells as characters and concatenates them into a string on the top of the stack until another `"` is encountered. If the top of the stack is not a string, a new string is pushed onto the stack. |
+|```| Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another ``` is encountered. |
+|`k`| To Char | Pops the top value off the stack and converts it to a Character |
+|`n`| To Number | Pops the top value off the stack and converts it to a double |
+|`I` `J` `H` `L`| Fork | Pops a value `x` off the stack. Spawns a new pointer in the indicated direction (I-up, J-down, H-left, K-right) with `x` mana. Requires `x` mana, consumes `x-1` mana. Can also use `↤` `↦` `↥` `↧` |
+
+### Unity specific commands
+
+|        Rune       |           Name           | Description      |
+|-------------------|--------------------------|------------------|
 |`Q`| Nearby Objects | Pops a value `x` off the stack and calls `Physics.OverlapSphere(selfPosition, x)` pushing each returned GameObject onto the stack. Requires a minimum of `x`+1 mana to execute and consumes `x` mana. |
 |`N`| Name | Pushes the name of a popped GameObject onto the stack |
 |`t`| This | Pushes the GameObject representing `this` onto the stack (i.e. the GameObject the script is functionally running on) |
-|`P`| Position | Pushes the Vector3 location of a popped GameObject onto the stack |
-|`V`| Vector3 | Pops three values `x`,`y`,`z` off the stack and pushes a resulting Vector3 onto the stack |
-|`d`| Distance | Pops two GameObject or Vector3 off the stack and computes their distance |
+|`G`| Get GameObject | Pops a string off the stack and queries the ObjectRegistry for a value. Pushes the result. |
+|`O`| Instantiate Ojbect | Pops a Vector `x` and GameObject `y` and spawns a clone of GameObject `y` at position `x`. Pushes the clone onto the stack. |
+|`x`| Position | Pushes the Vector3 location of a popped GameObject onto the stack |
 
 Any popped object that does not match the expected types is discarded, and the executed command is computed as best as possible (e.g. popping `(3,0,0)` and `5` off the stack when computing a distance `d` will result in a `3` being pushed onto the stack as a distance of `(3,0,0)` is `3` units: effectively results in pushing the vector's own magnitude).
+
+Any attempted pop of an empty stack terminates the IP.
 
 IPs that advance off the edge of the program (in any direction) are moved to the far edge. In this way `>1$` will print an endless series of `1`s.
 

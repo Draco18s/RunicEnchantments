@@ -7,7 +7,7 @@ namespace Assets.draco18s.runic.runes {
 		public RuneDiagonalReflector(char c) {
 			this.c = c;
 		}
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			int dir = (int)pointer.direction;
 			if(this.c == '/') {
 				if(dir % 2 == 0) {

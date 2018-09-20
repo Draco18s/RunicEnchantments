@@ -7,6 +7,7 @@ public class NewScriptModifier : UnityEditor.AssetModificationProcessor {
 	public static void OnWillCreateAsset(string path) {
 		path = path.Replace(".meta", "");
 		int index = path.LastIndexOf(".");
+		if(index < 0) return;
 		string file = path.Substring(index);
 		if(file != ".cs" && file != ".js" && file != ".boo") return;
 		index = Application.dataPath.LastIndexOf("Assets");

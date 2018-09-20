@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneObjectName : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			if(o is GameObject) {
 				pointer.Push(((GameObject)o).name);

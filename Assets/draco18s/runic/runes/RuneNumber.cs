@@ -2,20 +2,22 @@
 using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
-	internal class RuneNumber : IExecutableRune {
+	public class RuneNumber : IExecutableRune {
 		public int value;
+		char c;
 
-		public RuneNumber(int v) {
-			this.value = v;
+		public RuneNumber(int v, char c) {
+			value = v;
+			this.c = c;
 		}
 
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			pointer.Push(value);
 			return true;
 		}
 
 		public IExecutableRune Register() {
-			RuneRegistry.ALL_RUNES.Add(value.ToString()[0],this);
+			RuneRegistry.ALL_RUNES.Add(c,this);
 			return this;
 		}
 	}

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.draco18s.runic.runes {
 	internal class RuneAddition : IExecutableRune {
 
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			if(a != null && b != null) {
@@ -19,7 +19,7 @@ namespace Assets.draco18s.runic.runes {
 						pointer.Push(((Vector3)a + (Vector3)b));
 					}
 					else {
-						double c = Convert.ToDouble(a) + Convert.ToDouble(b);
+						double c = MathHelper.GetValue((ValueType)a) + MathHelper.GetValue((ValueType)b);
 						pointer.Push(c);
 					}
 				}

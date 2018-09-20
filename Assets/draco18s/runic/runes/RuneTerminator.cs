@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	internal class RuneTerminator : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			pointer.DeductMana(pointer.GetMana());
 			return true;
 		}

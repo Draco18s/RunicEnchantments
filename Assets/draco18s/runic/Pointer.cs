@@ -8,6 +8,7 @@ namespace Assets.draco18s.runic {
 		protected int age = 0;
 		protected int mana;
 		protected bool skip = false;
+		protected ReadType readType = ReadType.EXECUTE;
 
 		protected List<object> stack;
 
@@ -48,6 +49,7 @@ namespace Assets.draco18s.runic {
 				stack.RemoveAt(stack.Count - 1);
 				return o;
 			}
+			mana = 0;
 			return null;
 		}
 
@@ -76,6 +78,18 @@ namespace Assets.draco18s.runic {
 
 		public void SetSkip() {
 			skip = true;
+		}
+
+		public void SetReadType(ReadType t) {
+			readType = t;
+		}
+
+		public ReadType GetReadType() {
+			return readType;
+		}
+
+		public enum ReadType {
+			READ_CHAR, READ_CHAR_CONTINUOUS, READ_STR,EXECUTE
 		}
 	}
 }

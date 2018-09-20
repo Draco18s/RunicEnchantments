@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneMultiplication : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			if(a != null && b != null) {
@@ -14,19 +14,19 @@ namespace Assets.draco18s.runic.runes {
 						int c = (int)a * (int)b;
 						pointer.Push(c);
 					}
-					if(a is Vector3 || b is Vector3) {
+					else if(a is Vector3 || b is Vector3) {
 						if(a is Vector3 && b is Vector3) {
 							pointer.Push(Vector3.Cross((Vector3)a, (Vector3)b));
 						}
 						else if(a is Vector3) {
-							pointer.Push(((Vector3)a) * (float)Convert.ToDouble(b));
+							pointer.Push(((Vector3)a) * (float)MathHelper.GetValue((ValueType)b));
 						}
 						else if(b is Vector3) {
-							pointer.Push(((Vector3)b) * (float)Convert.ToDouble(a));
+							pointer.Push(((Vector3)b) * (float)MathHelper.GetValue((ValueType)a));
 						}
 					}
 					else {
-						double c = Convert.ToDouble(a) * Convert.ToDouble(b);
+						double c = MathHelper.GetValue((ValueType)a) * MathHelper.GetValue((ValueType)b);
 						pointer.Push(c);
 					}
 				}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneLength : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			pointer.Push(pointer.GetStackSize());
 			return true;
 		}

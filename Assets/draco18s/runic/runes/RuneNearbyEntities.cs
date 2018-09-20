@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneNearbyEntities : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			if(o is ValueType) {
 				float rad = (float)Convert.ToDouble(o);
@@ -17,7 +17,7 @@ namespace Assets.draco18s.runic.runes {
 				}
 				pointer.DeductMana(Mathf.CeilToInt(rad));
 
-				Collider[] colliders = Physics.OverlapSphere(go.transform.position, rad);
+				Collider[] colliders = Physics.OverlapSphere(context.self.transform.position, rad);
 				foreach(Collider c in colliders) {
 					pointer.Push(c.gameObject);
 				}

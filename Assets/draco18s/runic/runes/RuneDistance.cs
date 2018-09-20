@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneDistance : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			Vector3 v1 = getVec3(a);
@@ -25,7 +25,7 @@ namespace Assets.draco18s.runic.runes {
 		}
 
 		public IExecutableRune Register() {
-			RuneRegistry.ALL_RUNES.Add('d', this);
+			RuneRegistry.ALL_RUNES.Add('j', this);
 			return this;
 		}
 	}

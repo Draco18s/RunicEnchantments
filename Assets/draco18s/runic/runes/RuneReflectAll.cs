@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneReflectAll : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			pointer.direction = DirectionHelper.Reflect(pointer.direction);
 			return true;
 		}

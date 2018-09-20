@@ -23,20 +23,22 @@ namespace Assets.draco18s.util {
 		}
 
 		public static NumericRelationship Compare(ValueType v1, ValueType v2) {
-			if(IsInteger(v1) && IsInteger(v2)) {
-				int a = (int)v1;
-				int b = (int)v2;
-				if(a == b) return NumericRelationship.EqualTo;
-				if(a > b) return NumericRelationship.GreaterThan;
-				return NumericRelationship.LessThan;
+			double a = GetValue(v1);
+			double b = GetValue(v2);
+			if(Mathf.Approximately((float)a, (float)b)) return NumericRelationship.EqualTo;
+			if(a > b) return NumericRelationship.GreaterThan;
+			return NumericRelationship.LessThan;
+		}
+
+		public static double GetValue(ValueType v1) {
+			if(IsInteger(v1))
+				return (int)v1;
+			if(v1 is char)
+				return (char)v1 - 0;
+			else if(v1 is Vector3) {
+				return ((Vector3)v1).magnitude;
 			}
-			else {
-				double a = Convert.ToDouble(v1);
-				double b = Convert.ToDouble(v2);
-				if(a == b) return NumericRelationship.EqualTo;
-				if(a > b) return NumericRelationship.GreaterThan;
-				return NumericRelationship.LessThan;
-			}
+			else return Convert.ToDouble(v1);
 		}
 
 		public static float EaseLinear(float time, float from, float to, float duration) {

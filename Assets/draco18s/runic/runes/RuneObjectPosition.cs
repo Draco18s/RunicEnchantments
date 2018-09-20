@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneObjectPosition : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			if(o is GameObject) {
 				pointer.Push(((GameObject)o).transform.position);
@@ -14,7 +14,7 @@ namespace Assets.draco18s.runic.runes {
 		}
 
 		public IExecutableRune Register() {
-			RuneRegistry.ALL_RUNES.Add('P', this);
+			RuneRegistry.ALL_RUNES.Add('x', this);
 			return this;
 		}
 	}

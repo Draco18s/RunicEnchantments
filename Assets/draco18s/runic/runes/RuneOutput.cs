@@ -9,13 +9,14 @@ namespace Assets.draco18s.runic.runes {
 			this.c = c;
 			dumpStack = fullStack;
 		}
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			do {
 				object o = pointer.Pop();
 				if(o != null) {
 					Debug.Log(o);
 				}
 			} while(dumpStack && pointer.GetStackSize() > 0);
+			if(dumpStack) pointer.DeductMana(pointer.GetMana());
 			return true;
 		}
 

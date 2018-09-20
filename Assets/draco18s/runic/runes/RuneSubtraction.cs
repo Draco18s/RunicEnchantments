@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.draco18s.runic.runes {
 	internal class RuneSubtraction : IExecutableRune {
 
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			if(a != null && b != null) {

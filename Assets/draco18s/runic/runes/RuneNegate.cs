@@ -7,12 +7,12 @@ using UnityEngine;
 namespace Assets.draco18s.runic.runes {
 	public class RuneNegate : IExecutableRune {
 		RuneMultiplication mult = new RuneMultiplication();
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			if(o is ValueType) {
 				pointer.Push(o);
 				pointer.Push(-1);
-				mult.Execute(pointer, go);
+				mult.Execute(pointer, context);
 			}
 			return true;
 		}

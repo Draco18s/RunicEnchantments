@@ -11,7 +11,7 @@ namespace Assets.draco18s.runic.runes {
 			this.c = c;
 		}
 
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			if(pointer.GetAge() == 0) {
 				pointer.direction = dir;
 				pointer.Merge(new Pointer(10, pointer.direction, Vector2Int.zero));

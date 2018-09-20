@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RuneDuplicate : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			pointer.Push(o);
 			pointer.Push(o);

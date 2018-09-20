@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
 	public class RunePower : IExecutableRune {
-		public bool Execute(Pointer pointer, GameObject go) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			if(a is ValueType && b is ValueType) {
@@ -15,7 +15,7 @@ namespace Assets.draco18s.runic.runes {
 				else {
 					double x = Convert.ToDouble(a);
 					double y = Convert.ToDouble(b);
-					pointer.Push(Math.Pow(x, y));
+					pointer.Push(Math.Pow(y, x));
 				}
 			}
 			return true;

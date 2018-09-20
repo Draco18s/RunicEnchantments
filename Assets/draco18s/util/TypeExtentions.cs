@@ -26,12 +26,14 @@ namespace Assets.draco18s.util {
 		}
 
 		public static void RotateListLeft<T>(this List<T> list) {
+			if(list.Count <= 1) return;
 			T o = list[0];
 			list.RemoveAt(0);
 			list.Add(o);
 		}
 
 		public static void RotateListRight<T>(this List<T> list) {
+			if(list.Count <= 1) return;
 			list.Reverse();
 			list.RotateListLeft();
 			list.Reverse();

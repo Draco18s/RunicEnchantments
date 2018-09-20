@@ -11,10 +11,10 @@ namespace Assets.draco18s.runic.runes {
 			this.dir = dir;
 			this.c = c;
 		}
-		public bool Execute(Pointer pointer, GameObject go) {
-			if(pointer.direction == dir || pointer.direction == DirectionHelper.Reflect(dir)) return true;
+		public bool Execute(Pointer pointer, ExecutionContext context) {
+			if(pointer.direction == dir || pointer.direction == DirectionHelper.Reflect(dir)) pointer.direction = DirectionHelper.Reflect(pointer.direction);
 
-			pointer.direction = DirectionHelper.Reflect(pointer.direction);
+			
 			return true;
 		}
 
