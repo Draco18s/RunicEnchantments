@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B493134C-9A84-4A3F-BE23-81437E400E4B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RunicInterpreter</RootNamespace>
+    <AssemblyName>RunicInterpreter</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="draco18s\math\Vector2Int.cs" />
+    <Compile Include="draco18s\math\Vector3.cs" />
+    <Compile Include="draco18s\runic\Direction.cs" />
+    <Compile Include="draco18s\runic\ExecutionContext.cs" />
+    <Compile Include="draco18s\runic\init\RuneRegistry.cs" />
+    <Compile Include="draco18s\runic\ParseError.cs" />
+    <Compile Include="draco18s\runic\Parser.cs" />
+    <Compile Include="draco18s\runic\Pointer.cs" />
+    <Compile Include="draco18s\runic\runes\IExecutableRune.cs" />
+    <Compile Include="draco18s\runic\runes\RuneAddition.cs" />
+    <Compile Include="draco18s\runic\runes\RuneBlank.cs" />
+    <Compile Include="draco18s\runic\runes\RuneCharLiteral.cs" />
+    <Compile Include="draco18s\runic\runes\RuneConcatenate.cs" />
+    <Compile Include="draco18s\runic\runes\RuneConditional.cs" />
+    <Compile Include="draco18s\runic\runes\RuneDelay.cs" />
+    <Compile Include="draco18s\runic\runes\RuneDiagonalReflector.cs" />
+    <Compile Include="draco18s\runic\runes\RuneDirection.cs" />
+    <Compile Include="draco18s\runic\runes\RuneDistance.cs" />
+    <Compile Include="draco18s\runic\runes\RuneDivision.cs" />
+    <Compile Include="draco18s\runic\runes\RuneDuplicate.cs" />
+    <Compile Include="draco18s\runic\runes\RuneEntrySimple.cs" />
+    <Compile Include="draco18s\runic\runes\RuneEquals.cs" />
+    <Compile Include="draco18s\runic\runes\RuneFizzle.cs" />
+    <Compile Include="draco18s\runic\runes\RuneFork.cs" />
+    <Compile Include="draco18s\runic\runes\RuneGreaterThan.cs" />
+    <Compile Include="draco18s\runic\runes\RuneLength.cs" />
+    <Compile Include="draco18s\runic\runes\RuneLessThan.cs" />
+    <Compile Include="draco18s\runic\runes\RuneMana.cs" />
+    <Compile Include="draco18s\runic\runes\RuneMinMana.cs" />
+    <Compile Include="draco18s\runic\runes\RuneModulo.cs" />
+    <Compile Include="draco18s\runic\runes\RuneMultiplication.cs" />
+    <Compile Include="draco18s\runic\runes\RuneNegate.cs" />
+    <Compile Include="draco18s\runic\runes\RuneNumber.cs" />
+    <Compile Include="draco18s\runic\runes\RuneOutput.cs" />
+    <Compile Include="draco18s\runic\runes\RunePi.cs" />
+    <Compile Include="draco18s\runic\runes\RunePop.cs" />
+    <Compile Include="draco18s\runic\runes\RunePower.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReadChar.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReadCharContinuous.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReadInput.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReadString.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReflectAll.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReflector.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReverse.cs" />
+    <Compile Include="draco18s\runic\runes\RuneRotateStack.cs" />
+    <Compile Include="draco18s\runic\runes\RuneSort.cs" />
+    <Compile Include="draco18s\runic\runes\RuneSplit.cs" />
+    <Compile Include="draco18s\runic\runes\RuneSubtraction.cs" />
+    <Compile Include="draco18s\runic\runes\RuneSwap.cs" />
+    <Compile Include="draco18s\runic\runes\RuneSwapN.cs" />
+    <Compile Include="draco18s\runic\runes\RuneTenHundred.cs" />
+    <Compile Include="draco18s\runic\runes\RuneTerminator.cs" />
+    <Compile Include="draco18s\runic\runes\RuneToChar.cs" />
+    <Compile Include="draco18s\runic\runes\RuneToValue.cs" />
+    <Compile Include="draco18s\runic\runes\RuneTrampoline.cs" />
+    <Compile Include="draco18s\runic\runes\RuneVec3.cs" />
+    <Compile Include="draco18s\util\Coroutine.cs" />
+    <Compile Include="draco18s\util\MathHelper.cs" />
+    <Compile Include="draco18s\util\TypeExtentions.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
