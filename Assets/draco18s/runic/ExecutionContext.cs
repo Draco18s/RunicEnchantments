@@ -45,6 +45,7 @@ namespace Assets.draco18s.runic {
 		}
 
 		public bool Tick() {
+			pointers.RemoveAll(x => x.GetMana() <= 0);
 			foreach(Pointer pointer in pointers) {
 				pointer.Execute();
 				if(pointer.GetReadType() == Pointer.ReadType.EXECUTE) {
@@ -96,9 +97,19 @@ namespace Assets.draco18s.runic {
 					}
 				});
 			});
+			pointers.ForEach(x => {
+				if(x.GetMana() >= 100 && runes[x.position.x, x.position.y] != RuneRegistry.GetRune(' ')) {
+					runes[x.position.x, x.position.y] = RuneRegistry.GetRune(' ');
+					x.DeductMana(x.GetMana() / 2);
+				}
+			});
+			pointers.ForEach(x => {
+				if(x.GetStackSize() > x.GetMana()+10) {
+					x.DeductMana(1);
+				}
+			});
 			pointers.AddRange(newpointers);
 			newpointers.Clear();
-			pointers.RemoveAll(x => x.GetMana() <= 0);
 			return pointers.Count > 0;
 		}
 
@@ -107,6 +118,7 @@ namespace Assets.draco18s.runic {
 		}
 
 		private void AdvancePointer(Pointer pointer) {
+			if(pointer.GetMana() <= 0) return;
 			pointer.position.x += DirectionHelper.GetX(pointer.direction);
 			pointer.position.y += DirectionHelper.GetY(pointer.direction);
 			int width = runes.GetLength(0);

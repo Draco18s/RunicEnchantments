@@ -10,15 +10,15 @@ using UnityEngine.UI;
 using Assets.draco18s.ui;
 
 public class SceneUI : MonoBehaviour {
-	Coroutine execution;
+	public static SceneUI instance;
 	public GameObject tooltip;
 	public GameObject pointerPrefab;
 	public GameObject source;
 	public Transform canvas;
+	private Coroutine execution;
 	private bool doDebug;
 	private bool pauseDebug;
 	private Dictionary<Pointer,GameObject> pointerObjs;
-	public static SceneUI instance;
 
 	void Start () {
 		instance = this;
@@ -32,7 +32,15 @@ public class SceneUI : MonoBehaviour {
 		Toggle pauser = canvas.Find("PauseTog").GetComponent<Toggle>();
 		pauser.onValueChanged.AddListener(delegate { pauseDebug = pauser.isOn; });
 		Toggle tog = canvas.Find("DebugTog").GetComponent<Toggle>();
-		tog.onValueChanged.AddListener(delegate { doDebug = tog.isOn; });
+		tog.onValueChanged.AddListener(delegate {
+			doDebug = tog.isOn;
+			if(!doDebug) {
+				foreach(GameObject go in pointerObjs.Values) {
+					Destroy(go);
+				}
+				pointerObjs.Clear();
+			}
+		});
 		pointerObjs = new Dictionary<Pointer, GameObject>();
 	}
 
@@ -94,10 +102,14 @@ public class SceneUI : MonoBehaviour {
 			((RectTransform)go.transform).anchoredPosition = new Vector2(-87 + 8 * p.position.x + (OffsetForDir(p.direction)), 85 - 19 * p.position.y);
 			go.transform.localRotation = Quaternion.Euler(0, 0, RotationForDir(p.direction));
 		}
-		IEnumerable<KeyValuePair<Pointer,GameObject>> dead = pointerObjs.Where(x => !pointers.Contains(x.Key) && x.Value != null);
+		IEnumerable<KeyValuePair<Pointer, GameObject>> dead = pointerObjs.Where(x => x.Key.GetMana() <= 0);
+		foreach(KeyValuePair<Pointer, GameObject> pair in dead) {
+			pair.Value.GetComponent<Image>().color = Color.red;
+		}
+		dead = pointerObjs.Where(x => !pointers.Contains(x.Key) && x.Value != null);
 		foreach(KeyValuePair<Pointer, GameObject> pair in dead) {
 			//pointerObjs.Remove(pair.Key);
-			StartCoroutine(WaitDestroy(pair.Value));
+			StartCoroutine(WaitDestroy(pair.Key, pair.Value));
 		}
 	}
 
@@ -128,10 +140,11 @@ public class SceneUI : MonoBehaviour {
  /   5$$$;
  \"a"/$;
 >67y$/;*/
-	private IEnumerator WaitDestroy(GameObject obj) {
+	private IEnumerator WaitDestroy(Pointer k, GameObject obj) {
 		obj.GetComponent<Image>().color = Color.red;
-		yield return new WaitForSeconds(2);
+		yield return null;
 		Destroy(obj);
+		pointerObjs.Remove(k);
 	}
 
 	private void ShowError(ParseError err) {

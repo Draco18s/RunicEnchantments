@@ -14,7 +14,7 @@ namespace Assets.draco18s.runic {
 		public static ParseError Parse(string v, GameObject attatchedGameObj, out ExecutionContext context) {
 			List<Vector2Int> entries = new List<Vector2Int>();
 			string code = v;
-			if(!code.Contains(";") && !code.Contains("F")) {
+			if(!code.Contains(";") && !code.Contains("F") && !code.Contains("@")) {
 				context = null;
 				return new ParseError(ParseErrorType.NO_TERMINATOR, Vector2Int.zero, ';');
 			}

@@ -1,6 +1,16 @@
 # Runic Enchantments 2D Language Interpreter
 
-Runic script is a 2D interpreted language with multiple simultaneously processed instruction pointers. Each instruction pointer (IP) is spawned at an entry point with a mana ("energy") value, a direction, and an empty stack. Each cycle each IP (in order of creation) executes the instuction under itself and then moves forwards. If the instruction requires a quantity of mana and the IP does not have that much, then the update is treated as a NOP and the IP is not advanced. At the end of each update any pointers that exist in the same cell and have the same facing are merged. The older one retains its stack and gains the mana of the newer one, which is then destroyed. Any IP that has 0 or less mana is also destroyed.
+Runic script is a 2D interpreted language with multiple simultaneously processed instruction pointers. Each instruction pointer (IP) is spawned at an entry point with a mana ("energy") value, a direction, and an empty stack. Each cycle each IP (in order of creation) executes the instuction under itself and then moves forwards. If the instruction requires a quantity of mana and the IP does not have that much, then the update is treated as a NOP and the IP is not advanced.
+
+At the end of each update the following actiosn are performed (in order):
+
+ - Any pointers that exist in the same cell and have the same facing are merged: The older one retains its stack and gains the mana of the newer one, which is then destroyed.
+ 
+ - Any IP that has more than 100 mana burns out the rune it is on (making it act like a ` `) and half of its mana is lost.
+ 
+ - Any IP with a stack size greater than `mana + 10` loses 1 mana.
+ 
+ - Any IP that has 0 or less mana is destroyed.
 
 ## Commands
 
@@ -65,7 +75,7 @@ Any attempted pop of an empty stack terminates the IP.
 
 IPs that advance off the edge of the program (in any direction) are moved to the far edge. In this way `>1$` will print an endless series of `1`s.
 
-Currently all programs are terminated after 100 execution steps (for safety).
+Programs are terminated after 10000 execution steps in the event of infinite loops.
 
 ## Sample programs:
 
@@ -88,12 +98,11 @@ Has the output `1,5,4`: the lower right IP reaches its `$` first, while the top 
 
 `>4Qtd$;` prints the distance between the self-object and one other GameObject within radius 4 (in the sample scene this is `3.162278` and an empty stack)
 
+`"3X4+kSq$;` is a [quine](https://en.wikipedia.org/wiki/Quine_(computing)).
+
 ## TODO:
 
- - Strings and Character literals, as well as string concatenation
- - Various other Unity GameObject or Physics tasks (this is primary for using the language as enchantments on RPG gear: event entry points, object instantiation, IFF, Raycasting, etc)
+ - Various other Unity GameObject or Physics tasks (this is primary for using the language as enchantments on RPG gear: [ ] event entry points, [x] object instantiation, [x] IFF, [ ] Raycasting, etc)
  - Stacks of Stacks? (e.g. ><>'s `[` and `]` operators)
  - Register(s) (e.g. ><>'s `&` operator)
- - Jump instruction? (e.g. ><>'s `.` operator)
- - Forking (a command that when executed spawns a new IP)
  - Error handling (prevent crashes, terminate execution when running infinitely, etc)
