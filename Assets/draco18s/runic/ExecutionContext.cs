@@ -3,6 +3,7 @@ using Assets.draco18s.runic.runes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Assets.draco18s.runic {
@@ -25,7 +26,12 @@ namespace Assets.draco18s.runic {
 			newpointers = new List<Pointer>();
 			foreach(Vector2Int v in entries) {
 				Pointer pointer = new Pointer(0, Direction.RIGHT, v);
-				if(runes[v.x, v.y].Execute(pointer, null)) {
+				if(v.x < 0) {
+					RuneRegistry.GetRune('>').Execute(pointer, this);
+					pointer.position.x = 0;
+					pointer.position.y = 0;
+				}
+				else if(runes[v.x, v.y].Execute(pointer, null)) {
 					pointer.position.x += DirectionHelper.GetX(pointer.direction);
 					pointer.position.y += DirectionHelper.GetY(pointer.direction);
 				}
@@ -94,6 +100,10 @@ namespace Assets.draco18s.runic {
 			newpointers.Clear();
 			pointers.RemoveAll(x => x.GetMana() <= 0);
 			return pointers.Count > 0;
+		}
+
+		public ReadOnlyCollection<Pointer> GetPointers() {
+			return pointers.AsReadOnly();
 		}
 
 		private void AdvancePointer(Pointer pointer) {

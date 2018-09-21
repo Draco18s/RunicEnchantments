@@ -14,6 +14,10 @@ namespace Assets.draco18s.runic {
 		public static ParseError Parse(string v, GameObject attatchedGameObj, out ExecutionContext context) {
 			List<Vector2Int> entries = new List<Vector2Int>();
 			string code = v;
+			if(!code.Contains(";") && !code.Contains("F")) {
+				context = null;
+				return new ParseError(ParseErrorType.NO_TERMINATOR, Vector2Int.zero, ';');
+			}
 			code.Replace("\r", String.Empty);
 			string[] lines = code.Split('\n');
 			int max = 0;
@@ -48,13 +52,14 @@ namespace Assets.draco18s.runic {
 			}
 			if(entries.Count == 0) {
 				if(lines.Length == 1) {
-					IExecutableRune[,] runesb = new IExecutableRune[max + 1, lines.Length];
+					/*IExecutableRune[,] runesb = new IExecutableRune[max + 1, lines.Length];
 					runesb[0, 0] = RuneRegistry.GetRune('>');
 					entries.Add(new Vector2Int(0, 0));
 					for(int i = 0; i < max; i++) {
 						runesb[i + 1, 0] = runes[i, 0];
 					}
-					runes = runesb;
+					runes = runesb;*/
+					entries.Add(new Vector2Int(-1, 0));
 				}
 				else {
 					context = null;

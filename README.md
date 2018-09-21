@@ -9,11 +9,11 @@ Runic script is a 2D interpreted language with multiple simultaneously processed
 |` `| Empty | NOP - Nothing happens. IP will advance to the next cell. |
 |`0`-`9`| Integer Literals | Pushes the single digit value onto the stack |
 |`a`-`f`| Integer Literals | Literals for the values 10-15 |
-|`P`| Pi | Pushes the value of Pi onto the stack |
+|`P`| Pi | Pushes the value of Pi onto the stack. Can also use `π` |
 |`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo. These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP. |
 |`Z`| Negate | Multiplies the top value on the stack by -1 |
 |`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
-|`>` `<` `^` `v`| Simple Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
+|`>` `<` `^` `v`| Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
 |`$` `@`| Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
 |`;`| Terminator | Destroys an IP |
 |`m`| Mana | Pushes the current mana value onto the stack |
@@ -28,6 +28,7 @@ Runic script is a 2D interpreted language with multiple simultaneously processed
 |`s`| Swap N | Pops a value off the stack, then pops that many values off the stack, rotates them right one, and pushes them back.  (e.g. if your stack is [1,2,3,4,3], calling `s` results in [1,4,2,3]) |
 |`r`| Reverse | Reverses the stack |
 |`l`| Length | Pushes the current length of the stack onto the stack |
+|'o'| Sort | Pops ValueTypes off the stack until empty or a non-value is found (which is pushed back onto the stack). Sorts these values and pushes them back so that the smallest is on the top of the stack. Requires and consumes `n` mana where `n` is the size of the stack. |
 |`y`| Delay | IP NOPs and does not advance once |
 |`=`| Equals | Pops `x` and `y` and pushes `1` if they are equal, `0` otherwise |
 |`(` `)`| Less and Greater | Less than and Greater than respectively. Pushes `1` if true, pushes `0` otherwise |
@@ -40,7 +41,10 @@ Runic script is a 2D interpreted language with multiple simultaneously processed
 |```| Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another ``` is encountered. |
 |`k`| To Char | Pops the top value off the stack and converts it to a Character |
 |`n`| To Number | Pops the top value off the stack and converts it to a double |
+|`q`| Concatenate | Pops two values off the top of the stack `x` and `y` and concatenates them together as `yx` and pushes them back onto the stack. |
+|`u`| Uncat | Pops a value `x` off the stack. If it is a string it peeks at the next value on the stack. If it is a character it is popped `y` and performs `x.Split(y)`. Otherwise it decomposes the string into characters and pushes them back onto the stack in order. If `x` was instead a Vector, it is decomposed into three floats, pushed onto the stack in `x, y, z` order. |
 |`I` `J` `H` `L`| Fork | Pops a value `x` off the stack. Spawns a new pointer in the indicated direction (I-up, J-down, H-left, K-right) with `x` mana. Requires `x` mana, consumes `x-1` mana. Can also use `↤` `↦` `↥` `↧` |
+
 
 ### Unity specific commands
 
@@ -52,6 +56,8 @@ Runic script is a 2D interpreted language with multiple simultaneously processed
 |`G`| Get GameObject | Pops a string off the stack and queries the ObjectRegistry for a value. Pushes the result. |
 |`O`| Instantiate Ojbect | Pops a Vector `x` and GameObject `y` and spawns a clone of GameObject `y` at position `x`. Pushes the clone onto the stack. |
 |`x`| Position | Pushes the Vector3 location of a popped GameObject onto the stack |
+|`E`| IsEnemy? | Peeks at the top of the stack `x` and pushes 1 if `x` has the same layer tag as `this` |
+|`h`| Harm | Pops two objects off the stack, `x` and `y`, if `y` is a GameObject then if it is an entity, `x` damage is dealt to it. If it is a temporary object of some kind, then it is destroyed (the object handles its own destruction, with the damage value as a paramter, different objects may behave differently). |
 
 Any popped object that does not match the expected types is discarded, and the executed command is computed as best as possible (e.g. popping `(3,0,0)` and `5` off the stack when computing a distance `d` will result in a `3` being pushed onto the stack as a distance of `(3,0,0)` is `3` units: effectively results in pushing the vector's own magnitude).
 

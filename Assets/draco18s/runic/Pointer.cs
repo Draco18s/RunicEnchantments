@@ -84,6 +84,16 @@ namespace Assets.draco18s.runic {
 			readType = t;
 		}
 
+		public string PrintStack() {
+			int num = 0;
+			string s = "";
+			for(int i = stack.Count- 1; i >=0 && num < 5; i--) {
+				s += stack[i].ToString() + "\n";
+				num++;
+			}
+			return s;
+		}
+
 		public ReadType GetReadType() {
 			return readType;
 		}

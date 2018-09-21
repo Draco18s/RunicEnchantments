@@ -6,7 +6,8 @@ namespace Assets.draco18s.runic {
 	public enum ParseErrorType {
 		NONE,
 		INVALID_CHARACTER,
-		NO_ENTRY
+		NO_ENTRY,
+		NO_TERMINATOR
 	}
 
 	public struct ParseError {
