@@ -17,7 +17,7 @@ namespace RunicInterpreter {
 			RuneRegistry.Initialize();
 			bool keeprunning = true;
 
-			string codeIn = File.ReadAllText(args[1]);
+			string codeIn = File.ReadAllText(args[0]);
 			//string codeIn = "50,$;";
 			CoroutineHandle handle = runner.Run(Execute(codeIn));
 			while(keeprunning) {
