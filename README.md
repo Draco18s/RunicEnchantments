@@ -25,6 +25,7 @@ At the end of each update the following actiosn are performed (in order):
 |`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
 |`>` `<` `^` `v`| Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
 |`$` `@`| Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
+|`i`| Input | Reads from input treating objects as whitespace-speparated values (eg. `123.4 qwerty` will first read a double value of `123.4` then on the next read, read the string `qwerty`). Console branch only. |
 |`;`| Terminator | Destroys an IP |
 |`m`| Mana | Pushes the current mana value onto the stack |
 |`F`| Fizzle | Deducts 1 mana from the IP |

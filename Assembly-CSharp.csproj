@@ -112,6 +112,7 @@
     <Compile Include="Assets\draco18s\runic\runes\RunePower.cs" />
     <Compile Include="Assets\draco18s\runic\runes\RuneReadChar.cs" />
     <Compile Include="Assets\draco18s\runic\runes\RuneReadCharContinuous.cs" />
+    <Compile Include="Assets\draco18s\runic\runes\RuneReadInput.cs" />
     <Compile Include="Assets\draco18s\runic\runes\RuneReadString.cs" />
     <Compile Include="Assets\draco18s\runic\runes\RuneReflectAll.cs" />
     <Compile Include="Assets\draco18s\runic\runes\RuneReflector.cs" />
