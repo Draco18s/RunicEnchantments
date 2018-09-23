@@ -1,5 +1,6 @@
 using RunicInterpreter.draco18s.math;
 using RunicInterpreter.draco18s.runic.init;
+using RunicInterpreter.draco18s.util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace RunicInterpreter.draco18s.runic.runes {
 			object b = pointer.Pop();
 			if(a is ValueType && b is ValueType) {
 				if(a is Vector3 || b is Vector3) {
+				}
+				else if(a is char || b is char) {
+					double x = MathHelper.GetValue((ValueType)a);
+					double y = MathHelper.GetValue((ValueType)b);
+					pointer.Push(Math.Pow(y, x));
 				}
 				else {
 					double x = Convert.ToDouble(a);

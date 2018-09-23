@@ -29,8 +29,7 @@ namespace RunicInterpreter.draco18s.runic {
 					pointer.position.y = 0;
 				}
 				else if(runes[v.x, v.y].Execute(pointer, null)) {
-					pointer.position.x += DirectionHelper.GetX(pointer.direction);
-					pointer.position.y += DirectionHelper.GetY(pointer.direction);
+					AdvancePointer(pointer);
 				}
 				pointers.Add(pointer);
 			}
