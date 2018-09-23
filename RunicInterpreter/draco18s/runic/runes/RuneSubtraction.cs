@@ -20,7 +20,7 @@ namespace RunicInterpreter.draco18s.runic.runes {
 						pointer.Push(((Vector3)b - (Vector3)a));
 					}
 					else {
-						double c = Convert.ToDouble(b) - Convert.ToDouble(a);
+						double c = MathHelper.GetValue((ValueType)b) - MathHelper.GetValue((ValueType)a);
 						pointer.Push(c);
 					}
 				}
