@@ -25,6 +25,7 @@ At the end of each update the following actiosn are performed (in order):
 |`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
 |`>` `<` `^` `v`| Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
 |`$` `@`| Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
+|`i`| Input | Reads from input treating objects as whitespace-speparated values (eg. `123.4 qwerty` will first read a double value of `123.4` then on the next read, read the string `qwerty`). Console branch only. |
 |`;`| Terminator | Destroys an IP |
 |`m`| Mana | Pushes the current mana value onto the stack |
 |`F`| Fizzle | Deducts 1 mana from the IP |
@@ -38,7 +39,7 @@ At the end of each update the following actiosn are performed (in order):
 |`s`| Swap N | Pops a value off the stack, then pops that many values off the stack, rotates them right one, and pushes them back.  (e.g. if your stack is [1,2,3,4,3], calling `s` results in [1,4,2,3]) |
 |`r`| Reverse | Reverses the stack |
 |`l`| Length | Pushes the current length of the stack onto the stack |
-|'o'| Sort | Pops ValueTypes off the stack until empty or a non-value is found (which is pushed back onto the stack). Sorts these values and pushes them back so that the smallest is on the top of the stack. Requires and consumes `n` mana where `n` is the size of the stack. |
+|`o`| Sort | Pops ValueTypes off the stack until empty or a non-value is found (which is pushed back onto the stack). Sorts these values and pushes them back so that the smallest is on the top of the stack. Requires and consumes `n` mana where `n` is the size of the stack. |
 |`y`| Delay | IP NOPs and does not advance once |
 |`=`| Equals | Pops `x` and `y` and pushes `1` if they are equal, `0` otherwise |
 |`(` `)`| Less and Greater | Less than and Greater than respectively. Pushes `1` if true, pushes `0` otherwise |
@@ -48,7 +49,7 @@ At the end of each update the following actiosn are performed (in order):
 |`j`| Distance | Pops two GameObject or Vector3 off the stack and computes their distance |
 |`'`| Character literal | Next cell is read as a literal character |
 |`"`| Strign literal | IP enters reading mode and reads all cells as characters and concatenates them into a string on the top of the stack until another `"` is encountered. If the top of the stack is not a string, a new string is pushed onto the stack. |
-|```| Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another ``` is encountered. |
+| ` | Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another ``` is encountered. |
 |`k`| To Char | Pops the top value off the stack and converts it to a Character |
 |`n`| To Number | Pops the top value off the stack and converts it to a double |
 |`q`| Concatenate | Pops two values off the top of the stack `x` and `y` and concatenates them together as `yx` and pushes them back onto the stack. |
