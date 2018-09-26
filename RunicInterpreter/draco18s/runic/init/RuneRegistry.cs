@@ -90,7 +90,7 @@ namespace RunicInterpreter.draco18s.runic.init {
 			new RuneConcatenate().Register();
 			new RuneSplit().Register();
 
-			List<char> runeList = new List<char>();
+			/*List<char> runeList = new List<char>();
 			foreach(char c in ALL_RUNES.Keys) {
 				runeList.Add(c);
 			}
@@ -98,7 +98,7 @@ namespace RunicInterpreter.draco18s.runic.init {
 			for(int i = 0; i < runeList.Count; i++) {
 				Console.Write(runeList[i]);
 			}
-			Console.WriteLine("");
+			Console.WriteLine("");*/
 		}
 
 		public static char GetRuneChar(IExecutableRune rune) {
