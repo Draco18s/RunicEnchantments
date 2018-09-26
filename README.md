@@ -80,6 +80,24 @@ Programs are terminated after 10000 execution steps in the event of infinite loo
 
 ## Sample programs:
 
+### Hello World
+
+Simple:
+
+`>"Hello World!"$;`
+
+With IP redirection:
+
+    >"Hello"' q\
+     ;$"!dlroW"/
+	 
+With two instruction pointers:
+
+    >"Hello"$;
+	>" World"$;
+
+### Other examples
+
 `>>55+55++M4$;` prints 4 exactly once (two IPs are created but cannot pass the `M` command until they merge and have 20 mana: the value on their stack
 
 `>>55+55++4$;` prints 4 twice (both IPs reach the `4` and print it)
