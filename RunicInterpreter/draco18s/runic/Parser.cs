@@ -50,13 +50,14 @@ namespace RunicInterpreter.draco18s.runic {
 			}
 			if(entries.Count == 0) {
 				if(lines.Length == 1) {
-					IExecutableRune[,] runesb = new IExecutableRune[max + 1, lines.Length];
+					/*IExecutableRune[,] runesb = new IExecutableRune[max + 1, lines.Length];
 					runesb[0, 0] = RuneRegistry.GetRune('>');
 					entries.Add(new Vector2Int(0, 0));
 					for(int i = 0; i < max; i++) {
 						runesb[i + 1, 0] = runes[i, 0];
 					}
-					runes = runesb;
+					runes = runesb;*/
+					entries.Add(new Vector2Int(-1, 0));
 				}
 				else {
 					context = null;
