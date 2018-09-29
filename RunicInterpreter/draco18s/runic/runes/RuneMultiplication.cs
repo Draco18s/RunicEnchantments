@@ -2,7 +2,7 @@
 using RunicInterpreter.draco18s.runic.init;
 using RunicInterpreter.draco18s.util;
 using System;
-
+using System.Text;
 
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneMultiplication : IExecutableRune {
@@ -31,8 +31,13 @@ namespace RunicInterpreter.draco18s.runic.runes {
 						pointer.Push(c);
 					}
 				}
-				else {
-
+				else if(b is string && a is ValueType) {
+					StringBuilder sb = new StringBuilder((string)b);
+					int m = (int)MathHelper.GetValue((ValueType)a);
+					for(int i = 1; i < m; i++) {
+						sb.Append((string)b);
+					}
+					pointer.Push(sb.ToString());
 				}
 			}
 			return true;

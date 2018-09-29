@@ -8,22 +8,31 @@ using System.Threading.Tasks;
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneReadInput : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			string s = "";
-			do {
+			StringBuilder sb = new StringBuilder();
+			bool forceread = false;
+			while(Console.In.Peek() != -1) {
 				char c = (char)Console.In.Read();
-				s += c;
-				if(char.IsWhiteSpace(c))
-					break;
-			} while(true);
+				if(c == '\r') continue;
+				if(!forceread && char.IsWhiteSpace(c)) break;
+				if(!forceread && c == '\\') {
+					forceread = true;
+				}
+				else {
+					forceread = false;
+					sb.Append(c);
+				}
+			}
+
 			double d;
+			string s = sb.ToString();
 			if(double.TryParse(s, out d)) {
 				pointer.Push(d);
 			}
-			else if(s.Length > 1) {
+			else if(sb.Length > 1) {
 				pointer.Push(s);
 			}
-			else {
-				pointer.Push((char)s[0]);
+			else if(sb.Length > 0) {
+				pointer.Push(s[0]);
 			}
 			return true;
 		}

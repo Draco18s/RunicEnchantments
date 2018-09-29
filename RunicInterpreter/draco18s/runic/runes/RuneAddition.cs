@@ -24,8 +24,11 @@ namespace RunicInterpreter.draco18s.runic.runes {
 						pointer.Push(c);
 					}
 				}
-				else {
-
+				else if(b is string || a is string) {
+					string s1 = a.ToString();
+					string s2 = b.ToString();
+					
+					pointer.Push(s2+s1);
 				}
 			}
 			return true;
