@@ -20,12 +20,14 @@ At the end of each update the following actiosn are performed (in order):
 |`0`-`9`| Integer Literals | Pushes the single digit value onto the stack |
 |`a`-`f`| Integer Literals | Literals for the values 10-15 |
 |`P`| Pi | Pushes the value of Pi onto the stack. Can also use `π` |
-|`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo. These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP. |
+|`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo (All math operations perform an implicit conversion to a number where possible). These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP. For strings, `+` concatenates as `yx` and `*` takes a number (cast to int) `y` and makes that many copies of `x` (e.g. `"asdf"3*` pushes `"asdfasdfasdf" onto the stack) |
+|`X` `C` `Y` | Power of Ten | Multiplies the top value of the stack by 10, 100, and 1000 respectively. |
 |`Z`| Negate | Multiplies the top value on the stack by -1 |
 |`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
+|`A`| Math | Pops two values, `o` and `x`, if `o` is a character, it maps to the single-argument Math functions, passing `x` as the argument (grouped by relation): `S`,`C`,`T`,`i`,`o`,`a`: Sin, Cos, Tan, ASin, ACos, ATan. `f`,`c`,`r`: Floor, Ceiling, Round. `|`: Absolute value. `e`,`q`,`l`,`L`: Exp, Sqrt, Log, Log10 |
 |`>` `<` `^` `v`| Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
 |`$` `@`| Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
-|`i`| Input | Reads from input treating objects as whitespace-speparated values (eg. `123.4 qwerty` will first read a double value of `123.4` then on the next read, read the string `qwerty`). Console branch only. |
+|`i`| Input | Reads from input treating objects as whitespace-speparated values (eg. `123.4 qwerty` will first read a double value of `123.4` then on the next read, read the string `qwerty`). Using a `\` before a whitespace character will treat it as input (e.g. `as df` is two separate input strings while `as\ df` is one). Console branch only. |
 |`;`| Terminator | Destroys an IP |
 |`m`| Mana | Pushes the current mana value onto the stack |
 |`F`| Fizzle | Deducts 1 mana from the IP |
@@ -51,10 +53,11 @@ At the end of each update the following actiosn are performed (in order):
 |`"`| Strign literal | IP enters reading mode and reads all cells as characters and concatenates them into a string on the top of the stack until another `"` is encountered. If the top of the stack is not a string, a new string is pushed onto the stack. |
 | ` | Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another ``` is encountered. |
 |`k`| To Char | Pops the top value off the stack and converts it to a Character |
-|`n`| To Number | Pops the top value off the stack and converts it to a double |
+|`n`| To Number | Pops the top value off the stack and converts it to a double (if it is a value type) or tries to parse it as a double (if it is a string) |
 |`q`| Concatenate | Pops two values off the top of the stack `x` and `y` and concatenates them together as `yx` and pushes them back onto the stack. |
 |`u`| Uncat | Pops a value `x` off the stack. If it is a string it peeks at the next value on the stack. If it is a character it is popped `y` and performs `x.Split(y)`. Otherwise it decomposes the string into characters and pushes them back onto the stack in order. If `x` was instead a Vector, it is decomposed into three floats, pushed onto the stack in `x, y, z` order. |
 |`I` `J` `H` `L`| Fork | Pops a value `x` off the stack. Spawns a new pointer in the indicated direction (I-up, J-down, H-left, K-right) with `x` mana. Requires `x` mana, consumes `x-1` mana. Can also use `↤` `↦` `↥` `↧` |
+|`T`| Transfer Stack | If this is the only IP on this cell or it has no stack, the IP does nothing and does not advance. Otherwise, it pops a value `x` (cast to int), then pops `x` items off its own stack and transfers these values to *all* other IPs on this cell (they end up in the same order they were originally in). Stack underflow still transfers the items that did exist (although the source IP is still terminated). After a transfer has occurred, held IPs will 'skip', allowing them to advance next cycle. Note that if IPs are facing the same direction, they will be merged. |
 
 
 ### Unity specific commands
