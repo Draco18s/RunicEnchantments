@@ -1,6 +1,7 @@
 ﻿using Assets.draco18s.runic.init;
 using Assets.draco18s.util;
 using System;
+using System.Text;
 using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
@@ -30,8 +31,13 @@ namespace Assets.draco18s.runic.runes {
 						pointer.Push(c);
 					}
 				}
-				else {
-
+				else if(b is string && a is ValueType) {
+					StringBuilder sb = new StringBuilder((string)b);
+					int m = (int)MathHelper.GetValue((ValueType)a);
+					for(int i = 1; i < m; i++) {
+						sb.Append((string)b);
+					}
+					pointer.Push(sb.ToString());
 				}
 			}
 			return true;

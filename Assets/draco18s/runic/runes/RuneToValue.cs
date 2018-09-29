@@ -12,6 +12,11 @@ namespace Assets.draco18s.runic.runes {
 			if(o is ValueType) {
 				pointer.Push(MathHelper.GetValue((ValueType)o));
 			}
+			else if(o is string) {
+				double d;
+				if(double.TryParse((string)o, out d))
+					pointer.Push(d);
+			}
 			return true;
 		}
 

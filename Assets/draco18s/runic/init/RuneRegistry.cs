@@ -98,6 +98,8 @@ namespace Assets.draco18s.runic.init {
 			new RuneSplit().Register();
 			new RuneHarm().Register();
 			//new RuneReadInput().Register();
+			new RuneTransferStack().Register();
+			new RuneMathFunc().Register();
 		}
 
 		public static char GetRuneChar(IExecutableRune rune) {

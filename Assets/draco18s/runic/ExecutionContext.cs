@@ -116,7 +116,7 @@ namespace Assets.draco18s.runic {
 			return pointers.AsReadOnly();
 		}
 
-		private void AdvancePointer(Pointer pointer) {
+		public void AdvancePointer(Pointer pointer) {
 			if(pointer.GetMana() <= 0) return;
 			pointer.position.x += DirectionHelper.GetX(pointer.direction);
 			pointer.position.y += DirectionHelper.GetY(pointer.direction);
