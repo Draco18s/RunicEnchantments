@@ -33,6 +33,10 @@ namespace Assets.draco18s.runic.runes {
 				pointer.Push(v.y);
 				pointer.Push(v.z);
 			}
+			else {
+				pointer.Push(o.ToString());
+				Execute(pointer, context);
+			}
 			return true;
 		}
 

@@ -24,7 +24,6 @@ namespace Assets.draco18s.runic.runes {
 				foreach(Pointer p in pts) {
 					PsuhStack(p, stack);
 					p.SetSkip();
-					//context.AdvancePointer(p);
 				}
 				return true;
 			}

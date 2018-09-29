@@ -27,7 +27,7 @@ namespace Assets.draco18s.runic.runes {
 					string s1 = a.ToString();
 					string s2 = b.ToString();
 					
-					pointer.Push(s1+s2);
+					pointer.Push(s2+s1);
 				}
 			}
 			return true;
