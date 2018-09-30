@@ -46,7 +46,14 @@ namespace RunicInterpreter {
 		}
 
 		private static void ShowError(ParseError err) {
-			Console.Error.WriteLine("Parser error: " + err.type.ToString() + " at position (" + err.pos.x + "," + err.pos.y + "), character '" + err.character + "'");
+			StringBuilder sb = new StringBuilder("Parser error: ");
+			sb.Append(err.type.ToString());
+			sb.Append(" at position ");
+			sb.Append(err.pos);
+			sb.Append(", character '");
+			sb.Append(err.character);
+			sb.Append("'");
+			Console.Error.WriteLine(sb);
 		}
 	}
 }

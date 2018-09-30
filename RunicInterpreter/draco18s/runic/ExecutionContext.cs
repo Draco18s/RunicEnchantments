@@ -4,6 +4,7 @@ using RunicInterpreter.draco18s.math;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace RunicInterpreter.draco18s.runic {
 	public class ExecutionContext {
@@ -38,6 +39,10 @@ namespace RunicInterpreter.draco18s.runic {
 		public void SpawnPointer(Pointer p) {
 			newpointers.Add(p);
 			AdvancePointer(p);
+		}
+
+		public ReadOnlyCollection<Pointer> GetPointers() {
+			return pointers.AsReadOnly();
 		}
 
 		public bool Tick() {

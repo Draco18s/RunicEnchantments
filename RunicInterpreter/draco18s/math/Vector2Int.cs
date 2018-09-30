@@ -62,5 +62,15 @@ namespace RunicInterpreter.draco18s.math {
 				return hash;
 			}
 		}
+
+		public override string ToString() {
+			StringBuilder sb = new StringBuilder();
+			sb.Append("(");
+			sb.Append(x);
+			sb.Append(",");
+			sb.Append(y);
+			sb.Append(")");
+			return sb.ToString();
+		}
 	}
 }
