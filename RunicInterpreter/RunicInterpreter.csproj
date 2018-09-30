@@ -71,6 +71,7 @@
     <Compile Include="draco18s\runic\runes\RuneLength.cs" />
     <Compile Include="draco18s\runic\runes\RuneLessThan.cs" />
     <Compile Include="draco18s\runic\runes\RuneMana.cs" />
+    <Compile Include="draco18s\runic\runes\RuneMathFunc.cs" />
     <Compile Include="draco18s\runic\runes\RuneMinMana.cs" />
     <Compile Include="draco18s\runic\runes\RuneModulo.cs" />
     <Compile Include="draco18s\runic\runes\RuneMultiplication.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="draco18s\runic\runes\RuneToChar.cs" />
     <Compile Include="draco18s\runic\runes\RuneToValue.cs" />
     <Compile Include="draco18s\runic\runes\RuneTrampoline.cs" />
+    <Compile Include="draco18s\runic\runes\RuneTransferStack.cs" />
     <Compile Include="draco18s\runic\runes\RuneVec3.cs" />
     <Compile Include="draco18s\util\Coroutine.cs" />
     <Compile Include="draco18s\util\MathHelper.cs" />
@@ -108,7 +110,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
