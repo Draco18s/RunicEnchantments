@@ -24,7 +24,7 @@ At the end of each update the following actiosn are performed (in order):
 |`X` `C` `Y` | Power of Ten | Multiplies the top value of the stack by 10, 100, and 1000 respectively. |
 |`Z`| Negate | Multiplies the top value on the stack by -1 |
 |`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
-|`A`| Math | Pops two values, `o` and `x`, if `o` is a character, it maps to the single-argument Math functions, passing `x` as the argument (grouped by relation): `S`,`C`,`T`,`i`,`o`,`a`: Sin, Cos, Tan, ASin, ACos, ATan. `f`,`c`,`r`: Floor, Ceiling, Round. `|`: Absolute value. `e`,`q`,`l`,`L`: Exp, Sqrt, Log, Log10 |
+|`A`| Math | Pops two values, `o` and `x`, if `o` is a character, it maps to the single-argument Math functions, passing `x` as the argument (grouped by relation): `S`,`C`,`T`,`i`,`o`,`a`: Sin, Cos, Tan, ASin, ACos, ATan. `f`,`c`,`r`: Floor, Ceiling, Round. `\|`: Absolute value. `e`,`q`,`l`,`L`: Exp, Sqrt, Log, Log10 |
 |`>` `<` `^` `v`| Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise. |
 |`$` `@`| Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
 |`i`| Input | Reads from input treating objects as whitespace-speparated values (eg. `123.4 qwerty` will first read a double value of `123.4` then on the next read, read the string `qwerty`). Using a `\` before a whitespace character will treat it as input (e.g. `as df` is two separate input strings while `as\ df` is one). Console branch only. |

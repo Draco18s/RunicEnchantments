@@ -33,7 +33,7 @@ namespace RunicInterpreter.draco18s.runic.runes {
 				pointer.Push(v.y);
 				pointer.Push(v.z);
 			}
-			else {
+			else if(o != null) {
 				pointer.Push(o.ToString());
 				Execute(pointer, context);
 			}
