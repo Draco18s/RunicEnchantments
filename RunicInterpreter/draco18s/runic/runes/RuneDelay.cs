@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneDelay : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			pointer.SetSkip();
+			pointer.SetSkip(1);
 			return false;
 		}
 

@@ -1,0 +1,34 @@
+using RunicInterpreter.draco18s.runic.init;
+using System;
+
+namespace RunicInterpreter.draco18s.runic.runes {
+	public class RuneEval : IExecutableRune {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
+			object o = pointer.Pop();
+			if(o is string) {
+				string str = (string)o;
+				//pointer.DeductMana((int)Math.Ceiling(Math.Log(str.Length)));
+				Func<bool> execution = context.Eval(pointer, str, out int size);
+				if(size > 5) {
+					double n = Math.Log(size-5);
+					pointer.DeductMana((int)Math.Floor(n * n));
+				}
+				pointer.Push(execution);
+				return false;
+			}
+			else if(o is Func<bool>) {
+				Func<bool> isDone = (Func<bool>)o;
+				bool ret = isDone();
+				if(!ret)
+					pointer.Push(o);
+				return ret;
+			}
+			return true;
+		}
+
+		public IExecutableRune Register() {
+			RuneRegistry.ALL_RUNES.Add('E', this);
+			return this;
+		}
+	}
+}

@@ -7,7 +7,9 @@ namespace RunicInterpreter.draco18s.runic {
 		NONE,
 		INVALID_CHARACTER,
 		NO_ENTRY,
-		NO_TERMINATOR
+		NO_TERMINATOR,
+		INVALID_MODIFIER,
+		TOO_MANY_MODIFIERS
 	}
 
 	public struct ParseError {

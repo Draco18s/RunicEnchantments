@@ -9,10 +9,13 @@ namespace RunicInterpreter.draco18s.runic.runes {
 			object a = pointer.Pop();
 			if(a is ValueType) {
 				MathHelper.NumericRelationship r = MathHelper.Compare((ValueType)a, 0);
-				if(r != MathHelper.NumericRelationship.EqualTo) pointer.SetSkip();
+				if(r != MathHelper.NumericRelationship.EqualTo) {
+					int b = (int)MathHelper.GetValue((ValueType)a);
+					pointer.SetSkip(Math.Max(1,b));
+				}
 			}
 			else {
-				if(a == null) pointer.SetSkip();
+				if(a == null) pointer.SetSkip(1);
 				else pointer.Push(a);
 			}
 			return true;

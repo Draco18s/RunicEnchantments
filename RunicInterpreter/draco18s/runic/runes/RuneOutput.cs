@@ -13,7 +13,7 @@ namespace RunicInterpreter.draco18s.runic.runes {
 			do {
 				object o = pointer.Pop();
 				if(o != null) {
-					Console.Out.Write(o);
+					context.WriteOutputs(o);
 				}
 			} while(dumpStack && pointer.GetStackSize() > 0);
 			if(dumpStack) pointer.DeductMana(pointer.GetMana());

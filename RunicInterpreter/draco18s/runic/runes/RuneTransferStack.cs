@@ -1,4 +1,4 @@
-using RunicInterpreter.draco18s.runic.init;
+﻿using RunicInterpreter.draco18s.runic.init;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,21 +15,33 @@ namespace RunicInterpreter.draco18s.runic.runes {
 			object o = pointer.Pop();
 			if(o is ValueType) {
 				int v = (int)MathHelper.GetValue((ValueType)o);
-				List<object> stack = new List<object>();
-				for(;v>0;v--) {
-					stack.Add(pointer.Pop());
+				if(context.GetModifier(pointer.position.x, pointer.position.y) == '͍') {
+					foreach(Pointer p in pts) {
+						List<object> stack = new List<object>();
+						for(; v > 0; v--) {
+							stack.Add(p.Pop());
+						}
+						stack.Reverse();
+						PushStack(pointer, stack);
+					}
 				}
-				stack.Reverse();
-				foreach(Pointer p in pts) {
-					PsuhStack(p, stack);
-					p.SetSkip();
+				else {
+					List<object> stack = new List<object>();
+					for(; v > 0; v--) {
+						stack.Add(pointer.Pop());
+					}
+					stack.Reverse();
+					foreach(Pointer p in pts) {
+						PushStack(p, stack);
+						p.SetSkip(1);
+					}
 				}
 				return true;
 			}
 			return false;
 		}
 
-		private void PsuhStack(Pointer p, List<object> stack) {
+		private void PushStack(Pointer p, List<object> stack) {
 			foreach(object o in stack) {
 				p.Push(o);
 			}

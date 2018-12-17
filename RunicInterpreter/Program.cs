@@ -51,6 +51,10 @@ namespace RunicInterpreter {
 			sb.Append(" at position ");
 			sb.Append(err.pos);
 			sb.Append(", character '");
+			UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(err.character);
+			if(uc == UnicodeCategory.NonSpacingMark || uc == UnicodeCategory.EnclosingMark) {
+				sb.Append('◌');
+			}
 			sb.Append(err.character);
 			sb.Append("'");
 			Console.Error.WriteLine(sb);

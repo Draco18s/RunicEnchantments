@@ -85,13 +85,18 @@ namespace RunicInterpreter.draco18s.runic.init {
 			new RuneToChar().Register();
 			new RuneToValue().Register();
 			new RuneReadCharContinuous().Register();
-			new RuneReadInput().Register();
+
 			new RuneSort().Register();
 			new RuneConcatenate().Register();
 			new RuneSplit().Register();
+			new RuneReadInput().Register();
 			new RuneTransferStack().Register();
 			new RuneMathFunc().Register();
-
+			new RunePopNewStack().Register();
+			new RunePushNewStack().Register();
+			new RuneEval().Register();
+			new RuneBranchFunction().Register();
+			new RuneReflection().Register();
 			/*List<char> runeList = new List<char>();
 			foreach(char c in ALL_RUNES.Keys) {
 				runeList.Add(c);

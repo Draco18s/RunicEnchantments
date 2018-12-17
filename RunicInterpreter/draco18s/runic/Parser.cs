@@ -5,6 +5,8 @@ using RunicInterpreter.draco18s.math;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
 namespace RunicInterpreter.draco18s.runic {
 	public static class Parser {
@@ -20,7 +22,15 @@ namespace RunicInterpreter.draco18s.runic {
 			string[] lines = code.Split('\n');
 			int max = 0;
 			foreach(string s in lines) {
-				if(s.Length > max) {
+				string s2 = s;
+				for(int x = s2.Length - 1; x >= 0; x--) {
+					char cat = s2[x];
+					UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(cat);
+					if(uc == UnicodeCategory.NonSpacingMark || uc == UnicodeCategory.EnclosingMark || uc == UnicodeCategory.OtherNotAssigned) {
+						s2.Remove(x, 1);
+					}
+				}
+				if(s2.Length > max) {
 					max = s.Length;
 				}
 			}
@@ -30,15 +40,16 @@ namespace RunicInterpreter.draco18s.runic {
 				max++;
 			}
 			IExecutableRune[,] runes = new IExecutableRune[max, lines.Length];
+			char[,] modifiers = new char[max, lines.Length];
 			for(int y = 0; y < lines.Length; y++) {
+				int mutateOffset = 0;
 				for(int x = 0; x < max; x++) {
-					char cat = (x < lines[y].Length ? lines[y][x] : ' ');
+					char cat = (x + mutateOffset < lines[y].Length ? lines[y][x + mutateOffset] : ' ');
 					if(cat == '\r') cat = ' ';
 					IExecutableRune r = RuneRegistry.GetRune(cat);
+					modifiers[x, y] = ' ';
 					if(r == null) {
-						//context = null;
-						//return new ParseError(ParseErrorType.INVALID_CHARACTER, new Vector2Int(x,y), cat);
-						runes[x, y] = new RuneCharLiteral(cat);// RuneRegistry.GetRune(' ');
+						runes[x, y] = new RuneCharLiteral(cat);
 					}
 					else {
 						runes[x, y] = r;
@@ -46,17 +57,32 @@ namespace RunicInterpreter.draco18s.runic {
 							entries.Add(new Vector2Int(x, y));
 						}
 					}
+					int o = 1;
+					while(x + mutateOffset + o < lines[y].Length) {
+						char mod = lines[y][x + mutateOffset + o];
+						UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(mod);
+						if(uc == UnicodeCategory.NonSpacingMark || uc == UnicodeCategory.EnclosingMark || uc == UnicodeCategory.OtherNotAssigned) {
+							if(modifiers[x, y] != ' ') {
+								context = null;
+								return new ParseError(ParseErrorType.TOO_MANY_MODIFIERS, new Vector2Int(x, y), mod);
+							}
+							IExecutableRune rr = runes[x, y];
+							if(rr is RuneReflector || rr is RuneReflectAll || rr is RuneDiagonalReflector || rr is RuneDirection) {
+								context = null;
+								return new ParseError(ParseErrorType.INVALID_MODIFIER, new Vector2Int(x, y), mod);
+							}
+							modifiers[x, y] = mod;
+							mutateOffset++;
+						}
+						else {
+							break;
+						}
+						o++;
+					}
 				}
 			}
 			if(entries.Count == 0) {
 				if(lines.Length == 1) {
-					/*IExecutableRune[,] runesb = new IExecutableRune[max + 1, lines.Length];
-					runesb[0, 0] = RuneRegistry.GetRune('>');
-					entries.Add(new Vector2Int(0, 0));
-					for(int i = 0; i < max; i++) {
-						runesb[i + 1, 0] = runes[i, 0];
-					}
-					runes = runesb;*/
 					entries.Add(new Vector2Int(-1, 0));
 				}
 				else {
@@ -64,8 +90,43 @@ namespace RunicInterpreter.draco18s.runic {
 					return new ParseError(ParseErrorType.NO_ENTRY, Vector2Int.zero, '>');
 				}
 			}
-			context = new ExecutionContext(runes, entries);
+			context = new ExecutionContext(runes, entries, modifiers).SetReader(DefaultReader).SetWriter(DefaultWriter);
 			return new ParseError(ParseErrorType.NONE, Vector2Int.zero, ' ');
+		}
+
+		public static object DefaultReader() {
+			StringBuilder sb = new StringBuilder();
+			bool forceread = false;
+			while(Console.In.Peek() != -1) {
+				char c = (char)Console.In.Read();
+				if(c == '\r') continue;
+				if(!forceread && char.IsWhiteSpace(c)) break;
+				if(!forceread && c == '\\') {
+					forceread = true;
+				}
+				else {
+					forceread = false;
+					sb.Append(c);
+				}
+			}
+
+			double d;
+			string s = sb.ToString();
+			if(double.TryParse(s, out d)) {
+				return d;
+			}
+			else if(sb.Length > 1) {
+				return s;
+			}
+			else if(sb.Length > 0) {
+				return s[0];
+			}
+			return null;
+		}
+
+		public static object DefaultWriter(object o) {
+			Console.Out.Write(o);
+			return o;
 		}
 	}
 }

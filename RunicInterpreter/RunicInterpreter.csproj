@@ -47,6 +47,7 @@
     <Compile Include="draco18s\math\Vector3.cs" />
     <Compile Include="draco18s\runic\Direction.cs" />
     <Compile Include="draco18s\runic\ExecutionContext.cs" />
+    <Compile Include="draco18s\runic\init\RuneReflection.cs" />
     <Compile Include="draco18s\runic\init\RuneRegistry.cs" />
     <Compile Include="draco18s\runic\ParseError.cs" />
     <Compile Include="draco18s\runic\Parser.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="draco18s\runic\runes\IExecutableRune.cs" />
     <Compile Include="draco18s\runic\runes\RuneAddition.cs" />
     <Compile Include="draco18s\runic\runes\RuneBlank.cs" />
+    <Compile Include="draco18s\runic\runes\RuneBranchFunction.cs" />
     <Compile Include="draco18s\runic\runes\RuneCharLiteral.cs" />
     <Compile Include="draco18s\runic\runes\RuneConcatenate.cs" />
     <Compile Include="draco18s\runic\runes\RuneConditional.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="draco18s\runic\runes\RuneDuplicate.cs" />
     <Compile Include="draco18s\runic\runes\RuneEntrySimple.cs" />
     <Compile Include="draco18s\runic\runes\RuneEquals.cs" />
+    <Compile Include="draco18s\runic\runes\RuneEval.cs" />
     <Compile Include="draco18s\runic\runes\RuneFizzle.cs" />
     <Compile Include="draco18s\runic\runes\RuneFork.cs" />
     <Compile Include="draco18s\runic\runes\RuneGreaterThan.cs" />
@@ -80,7 +83,9 @@
     <Compile Include="draco18s\runic\runes\RuneOutput.cs" />
     <Compile Include="draco18s\runic\runes\RunePi.cs" />
     <Compile Include="draco18s\runic\runes\RunePop.cs" />
+    <Compile Include="draco18s\runic\runes\RunePopNewStack.cs" />
     <Compile Include="draco18s\runic\runes\RunePower.cs" />
+    <Compile Include="draco18s\runic\runes\RunePushNewStack.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadChar.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadCharContinuous.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadInput.cs" />

@@ -1,17 +1,17 @@
-using RunicInterpreter.draco18s.runic.init;
 using System.Collections;
-using System.Collections.Generic;
-
+using RunicInterpreter.draco18s.runic.init;
+using System;
+using RunicInterpreter.draco18s.util;
 
 namespace RunicInterpreter.draco18s.runic.runes {
-	public class RuneTrampoline : IExecutableRune {
+	public class RunePushNewStack : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			pointer.SetSkip(1);
+			pointer.PushNewStack();
 			return true;
 		}
 
 		public IExecutableRune Register() {
-			RuneRegistry.ALL_RUNES.Add('!', this);
+			RuneRegistry.ALL_RUNES.Add(']', this);
 			return this;
 		}
 	}

@@ -1,4 +1,4 @@
-using RunicInterpreter.draco18s.runic.init;
+﻿using RunicInterpreter.draco18s.runic.init;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +16,12 @@ namespace RunicInterpreter.draco18s.runic.runes {
 					list.Add(pointer.Pop());
 				}
 				list.Reverse();
-				list.RotateListRight();
+				if(context.GetModifier(pointer.position.x, pointer.position.y) != '͍') {
+					list.RotateListLeft();
+				}
+				else {
+					list.RotateListRight();
+				}
 				for(int i = 0; i < n; i++) {
 					pointer.Push(list[i]);
 				}
