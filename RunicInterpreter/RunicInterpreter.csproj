@@ -47,7 +47,6 @@
     <Compile Include="draco18s\math\Vector3.cs" />
     <Compile Include="draco18s\runic\Direction.cs" />
     <Compile Include="draco18s\runic\ExecutionContext.cs" />
-    <Compile Include="draco18s\runic\init\RuneReflection.cs" />
     <Compile Include="draco18s\runic\init\RuneRegistry.cs" />
     <Compile Include="draco18s\runic\ParseError.cs" />
     <Compile Include="draco18s\runic\Parser.cs" />
