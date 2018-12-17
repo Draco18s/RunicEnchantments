@@ -1,5 +1,7 @@
 ﻿using RunicInterpreter.draco18s.runic.init;
 using RunicInterpreter.draco18s.runic.runes;
+using RunicInterpreter.draco18s.util;
+using System;
 using System.Globalization;
 
 namespace RunicInterpreter.draco18s.runic.runes {
