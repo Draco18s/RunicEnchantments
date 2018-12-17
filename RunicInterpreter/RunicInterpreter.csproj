@@ -90,6 +90,7 @@
     <Compile Include="draco18s\runic\runes\RuneReadInput.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadString.cs" />
     <Compile Include="draco18s\runic\runes\RuneReflectAll.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReflection.cs" />
     <Compile Include="draco18s\runic\runes\RuneReflector.cs" />
     <Compile Include="draco18s\runic\runes\RuneReverse.cs" />
     <Compile Include="draco18s\runic\runes\RuneRotateStack.cs" />
