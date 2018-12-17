@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunicEnchantments", "Assembly-CSharp.csproj", "{8BE25938-E7BC-CE77-0A05-88C0465E0903}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{8BE25938-E7BC-CE77-0A05-88C0465E0903}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunicEnchantments", "Assembly-CSharp-Editor.csproj", "{4D2DF87A-3767-2565-957E-1E54F9EE9204}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{4D2DF87A-3767-2565-957E-1E54F9EE9204}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

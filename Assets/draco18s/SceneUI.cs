@@ -8,6 +8,10 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.draco18s.ui;
+using Assets.draco18s.runic.runes;
+using TMPro;
+using System;
+using System.Globalization;
 
 public class SceneUI : MonoBehaviour {
 	public static SceneUI instance;
@@ -18,15 +22,15 @@ public class SceneUI : MonoBehaviour {
 	private Coroutine execution;
 	private bool doDebug;
 	private bool pauseDebug;
-	private Dictionary<Pointer,GameObject> pointerObjs;
+	private Dictionary<Pointer, GameObject> pointerObjs;
 
-	void Start () {
+	void Start() {
 		instance = this;
 		RuneRegistry.Initialize();
 		ObjectRegistry.Initialize();
 		transform.Find("Button").GetComponent<Button>().onClick.AddListener(delegate {
 			transform.Find("Button").gameObject.GetComponent<Button>().interactable = false;
-			execution = StartCoroutine(Execute(transform.Find("InputField").GetComponent<InputField>().text));
+			execution = StartCoroutine(Execute(transform.Find("CodeField").GetComponent<TMP_InputField>().text));
 		});
 		doDebug = false;
 		Toggle pauser = canvas.Find("PauseTog").GetComponent<Toggle>();
@@ -50,9 +54,15 @@ public class SceneUI : MonoBehaviour {
 		stxt.text = p.PrintStack();
 		instance.tooltip.transform.Find("StackLabel").GetComponent<Text>().text = "Stack: " + p.GetStackSize();
 		instance.tooltip.SetActive(true);
+		int skip = p.GetSkipAmt();
+		GameObject go = instance.tooltip.transform.Find("SkippingTxt").gameObject;
+		go.SetActive(skip > 0);
+		go.GetComponent<Text>().text = "Skip: " + skip;
 	}
 
 	private IEnumerator Execute(string code) {
+		FixTextBoxes(code);
+		RuneReadInput.inputInd = -1;
 		foreach(GameObject go in pointerObjs.Values) {
 			Destroy(go);
 		}
@@ -80,9 +90,28 @@ public class SceneUI : MonoBehaviour {
 			continueExecuting = context.Tick();
 			if(doDebug)
 				UpdateDebugGraphics(context);
-			yield return (doDebug ? new WaitForSeconds(2f) : null);
+			yield return (doDebug ? new WaitForSeconds(.5f) : null);
 		} while(continueExecuting && counter < 10000);
 		transform.Find("Button").gameObject.GetComponent<Button>().interactable = true;
+		transform.Find("CodeField").GetComponent<TMP_InputField>().text = code;
+		transform.Find("CodeField/Text Area/markup").GetComponent<TMP_Text>().text = "";
+	}
+
+	private void FixTextBoxes(string code) {
+		string r = "";
+		string m = "";
+		foreach(char cat in code) {
+			UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(cat);
+			if(uc == UnicodeCategory.NonSpacingMark || uc == UnicodeCategory.EnclosingMark || uc == UnicodeCategory.OtherNotAssigned) {
+				m = m.Substring(0,m.Length-1) + cat;
+			}
+			else {
+				m += ' ';
+				r += cat;
+			}
+		}
+		transform.Find("CodeField").GetComponent<TMP_InputField>().text = r;
+		transform.Find("CodeField/Text Area/markup").GetComponent<TMP_Text>().text = m;
 	}
 
 	private void UpdateDebugGraphics(ExecutionContext context) {
@@ -99,7 +128,7 @@ public class SceneUI : MonoBehaviour {
 				});
 				pointerObjs.Add(p, go);
 			}
-			((RectTransform)go.transform).anchoredPosition = new Vector2(-87 + 8 * p.position.x + (OffsetForDir(p.direction)), 85 - 19 * p.position.y);
+			((RectTransform)go.transform).anchoredPosition = new Vector2(((RectTransform)transform.Find("CodeField")).anchoredPosition.x +13 + 8 * p.position.x + (OffsetForDir(p.direction)), ((RectTransform)transform.Find("CodeField")).anchoredPosition.y - 15 - 18 * p.position.y);
 			go.transform.localRotation = Quaternion.Euler(0, 0, RotationForDir(p.direction));
 		}
 		IEnumerable<KeyValuePair<Pointer, GameObject>> dead = pointerObjs.Where(x => x.Key.GetMana() <= 0);
@@ -136,10 +165,10 @@ public class SceneUI : MonoBehaviour {
 		}
 		return 0;
 	}
-/*>1234\
- /   5$$$;
- \"a"/$;
->67y$/;*/
+	/*>1234\
+	 /   5$$$;
+	 \"a"/$;
+	>67y$/;*/
 	private IEnumerator WaitDestroy(Pointer k, GameObject obj) {
 		obj.GetComponent<Image>().color = Color.red;
 		yield return null;

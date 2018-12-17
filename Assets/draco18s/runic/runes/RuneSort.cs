@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Assets.draco18s.runic.runes {
 	public class RuneSort : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			int cost = pointer.GetStackSize();
+			int cost = Math.Max(pointer.GetStackSize()-10,1);
 			if(pointer.GetMana() <= cost) return false;
 			pointer.DeductMana(cost);
 			List<ValueType> list = new List<ValueType>();

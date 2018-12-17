@@ -93,13 +93,18 @@ namespace Assets.draco18s.runic.init {
 			new RuneInstantiate().Register();
 			new RuneSort().Register();
 			new RuneIsObject().Register();
-			new RuneIsEnemy().Register();
+			//new RuneIsEnemy().Register();
 			new RuneConcatenate().Register();
 			new RuneSplit().Register();
 			new RuneHarm().Register();
-			//new RuneReadInput().Register();
+			new RuneReadInput().Register();
 			new RuneTransferStack().Register();
 			new RuneMathFunc().Register();
+			new RunePopNewStack().Register();
+			new RunePushNewStack().Register();
+			new RuneEval().Register();
+			new RuneBranchFunction().Register();
+			new RuneReflection().Register();
 		}
 
 		public static char GetRuneChar(IExecutableRune rune) {

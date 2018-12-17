@@ -1,4 +1,4 @@
-using Assets.draco18s.runic.init;
+﻿using Assets.draco18s.runic.init;
 using Assets.draco18s.runic.runes;
 using System;
 using System.Collections;
@@ -11,14 +11,28 @@ namespace Assets.draco18s.runic {
 		public readonly GameObject self;
 
 		private IExecutableRune[,] runes;
+		private char[,] modifiers;
 		private List<Vector2Int> entries;
 		private List<Pointer> newpointers;
 		private List<Pointer> pointers;
+		private Func<object> inputReader;
+		private Func<object,object> outputWriter;
 
-		public ExecutionContext(IExecutableRune[,] runes, List<Vector2Int> entryPoints, GameObject selfGO) {
+		public ExecutionContext(IExecutableRune[,] runes, List<Vector2Int> entryPoints, char[,] modifiers, GameObject selfGO) {
 			this.runes = runes;
 			this.entries = entryPoints;
+			this.modifiers = modifiers;
 			self = selfGO;
+		}
+
+		public ExecutionContext SetWriter(Func<object, object> writer) {
+			outputWriter = writer;
+			return this;
+		}
+
+		public ExecutionContext SetReader(Func<object> reader) {
+			inputReader = reader;
+			return this;
 		}
 
 		public void Initialize() {
@@ -32,7 +46,7 @@ namespace Assets.draco18s.runic {
 					pointer.position.y = 0;
 				}
 				else if(runes[v.x, v.y].Execute(pointer, null)) {
-					AdvancePointer(pointer);
+					AdvancePointer(pointer,true);
 				}
 				pointers.Add(pointer);
 			}
@@ -40,23 +54,35 @@ namespace Assets.draco18s.runic {
 
 		public void SpawnPointer(Pointer p) {
 			newpointers.Add(p);
-			AdvancePointer(p);
+			AdvancePointer(p,true);
+		}
+
+		public ReadOnlyCollection<Pointer> GetPointers() {
+			return pointers.AsReadOnly();
 		}
 
 		public bool Tick() {
 			pointers.RemoveAll(x => x.GetMana() <= 0);
 			foreach(Pointer pointer in pointers) {
 				pointer.Execute();
+				bool alreadySkipping = pointer.isSkipping(false);
 				if(pointer.GetReadType() == Pointer.ReadType.EXECUTE) {
-					if(pointer.isSkipping() || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
-						AdvancePointer(pointer);
+					if(pointer.position.x >= runes.GetLength(0) || pointer.position.y >= runes.GetLength(1)) {
+						pointer.DeductMana(pointer.GetMana());
+					}
+					else if(pointer.isSkipping(true) || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
+						AdvancePointer(pointer,!alreadySkipping);
 					}
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_CHAR) {
 					char c = RuneRegistry.GetRuneChar(runes[pointer.position.x, pointer.position.y]);
 					pointer.Push(c);
+					c = modifiers[pointer.position.x, pointer.position.y];
+					if(c != ' ') {
+						pointer.Push(c);
+					}
 					pointer.SetReadType(Pointer.ReadType.EXECUTE);
-					AdvancePointer(pointer);
+					AdvancePointer(pointer,false);
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_CHAR_CONTINUOUS) {
 					char c = RuneRegistry.GetRuneChar(runes[pointer.position.x, pointer.position.y]);
@@ -65,25 +91,40 @@ namespace Assets.draco18s.runic {
 					}
 					else {
 						pointer.Push(c);
+						c = modifiers[pointer.position.x, pointer.position.y];
+						if(c != ' ') {
+							pointer.Push(c);
+						}
 					}
-					AdvancePointer(pointer);
+					AdvancePointer(pointer,false);
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_STR) {
 					char c = RuneRegistry.GetRuneChar(runes[pointer.position.x, pointer.position.y]);
 					if(c.Equals('\"')) {
 						pointer.SetReadType(Pointer.ReadType.EXECUTE);
+						AdvancePointer(pointer, true);
 					}
 					else {
 						object o = pointer.GetStackSize() > 0 ? pointer.Pop() : null;
 						if(o is string || o == null) {
-							pointer.Push((string)o + c);
+							string s = (string)o + c;
+							c = modifiers[pointer.position.x, pointer.position.y];
+							if(c != ' ') {
+								s += c;
+							}
+							pointer.Push(s);
 						}
 						else {
 							pointer.Push(o);
-							pointer.Push(c.ToString());
+							string s = c.ToString();
+							c = modifiers[pointer.position.x, pointer.position.y];
+							if(c != ' ') {
+								s += c;
+							}
+							pointer.Push(s);
 						}
+						AdvancePointer(pointer, false);
 					}
-					AdvancePointer(pointer);
 				}
 			}
 			pointers.ForEach(x => {
@@ -100,6 +141,14 @@ namespace Assets.draco18s.runic {
 				if(x.GetMana() >= 100 && runes[x.position.x, x.position.y] != RuneRegistry.GetRune(' ')) {
 					runes[x.position.x, x.position.y] = RuneRegistry.GetRune(' ');
 					x.DeductMana(x.GetMana() / 2);
+					Debug.Log("Warning: rune at " + x.position + " has burned out!");
+				}
+			});
+			pointers.ForEach(x => {
+				if(modifiers[x.position.x, x.position.y] == '̺' || modifiers[x.position.x, x.position.y] == '̪') {
+					if(x.GetStackSize() > x.GetMana() + 10) {
+						TruncateStack(x, modifiers[x.position.x, x.position.y] == '̪');
+					}
 				}
 			});
 			pointers.ForEach(x => {
@@ -112,12 +161,31 @@ namespace Assets.draco18s.runic {
 			return pointers.Count > 0;
 		}
 
-		public ReadOnlyCollection<Pointer> GetPointers() {
-			return pointers.AsReadOnly();
+		private void TruncateStack(Pointer x, bool fromTop) {
+			if(!fromTop) {
+				x.ReverseStack();
+			}
+			while(x.GetStackSize() > x.GetMana() + 10) {
+				x.Pop();
+			}
+			if(!fromTop) {
+				x.ReverseStack();
+			}
 		}
 
-		public void AdvancePointer(Pointer pointer) {
+		public char GetModifier(int x, int y) {
+			return modifiers[x, y];
+		}
+
+		public void AdvancePointer(Pointer pointer, bool readModifier) {
 			if(pointer.GetMana() <= 0) return;
+				if(pointer.isSkipping(false)) return;
+			if(readModifier) {
+				pointer.direction = GetModifiedDirection(modifiers[pointer.position.x, pointer.position.y], pointer.direction);
+				int j = GetDelayAmount(modifiers[pointer.position.x, pointer.position.y]);
+				pointer.SetSkip(j);
+				if(j > 0) return;
+			}
 			pointer.position.x += DirectionHelper.GetX(pointer.direction);
 			pointer.position.y += DirectionHelper.GetY(pointer.direction);
 			int width = runes.GetLength(0);
@@ -134,6 +202,91 @@ namespace Assets.draco18s.runic {
 			if(pointer.position.y < 0) {
 				pointer.position.y = height - 1;
 			}
+		}
+
+		private int GetDelayAmount(char modifier) {
+			switch(modifier) {
+				case '̇':// ̇
+					return 1;
+				case '̈':// ̈
+					return 2;
+				case '̣':// ̣
+					return 4;
+				case '̤':// ̤
+					return 8;
+			}
+			return 0;
+		}
+
+		public Direction GetModifiedDirection(char modifier, Direction original) {
+			switch(modifier) {
+				case '͔':
+				case '᷾':
+					return Direction.LEFT;
+				case '͕'://B̂B̌B᷾B͐
+				case '͐'://B̬B̭B͔B͕
+					return Direction.RIGHT;
+				case '̭':
+				case '̂':
+					return Direction.UP;
+				case '̬':
+				case '̌':
+					return Direction.DOWN;
+			}
+			return original;
+		}
+
+		public Func<bool> Eval(Pointer pointer, string code, out int size) {
+			ExecutionContext context;
+			ParseError err = Parser.Parse(code, self, out context);
+
+			if(modifiers[pointer.position.x, pointer.position.y] == '͍') {
+				context.SetReader(() => {
+					if(pointer.GetStackSize() > 0) {
+						return pointer.Pop();
+					}
+					return null;
+				});
+				context.SetWriter((o) => {
+					pointer.Push(o);
+					return o;
+				});
+			}
+			if(err.type != ParseErrorType.NONE || context == null) {
+				size = 0;
+				return () => true;
+			}
+			context.Initialize();
+			size = context.runes.GetLength(0) + context.runes.GetLength(1);
+			return () => {
+				bool continueExecuting = false;
+				continueExecuting = context.Tick();
+				return !continueExecuting;
+			};
+		}
+
+		public void ReadInput(Pointer pointer) {
+			object o = inputReader();
+			if(o != null)
+				pointer.Push(o);
+		}
+
+		public void WriteOutputs(object o) {
+			outputWriter(o);
+		}
+
+		internal void SetRune(int x, int y, char c) {
+			IExecutableRune r = RuneRegistry.GetRune(c);
+			if(r == null) {
+				runes[x, y] = new RuneCharLiteral(c);
+			}
+			else {
+				runes[x, y] = r;
+			}
+		}
+
+		internal void SetModifier(int x, int y, char c) {
+			modifiers[x, y] = c;
 		}
 	}
 }
