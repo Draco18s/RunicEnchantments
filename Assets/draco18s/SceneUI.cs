@@ -54,10 +54,9 @@ public class SceneUI : MonoBehaviour {
 		stxt.text = p.PrintStack();
 		instance.tooltip.transform.Find("StackLabel").GetComponent<Text>().text = "Stack: " + p.GetStackSize();
 		instance.tooltip.SetActive(true);
-		int skip = p.GetSkipAmt();
+		bool skip = p.isSkipping(false);
 		GameObject go = instance.tooltip.transform.Find("SkippingTxt").gameObject;
-		go.SetActive(skip > 0);
-		go.GetComponent<Text>().text = "Skip: " + skip;
+		go.SetActive(skip);
 	}
 
 	private IEnumerator Execute(string code) {

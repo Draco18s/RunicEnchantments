@@ -177,13 +177,13 @@ namespace Assets.draco18s.runic {
 			return modifiers[x, y];
 		}
 
-		public void AdvancePointer(Pointer pointer, bool readModifier) {
+		public void AdvancePointer(Pointer pointer, bool readDelayModifier) {
 			if(pointer.GetMana() <= 0) return;
-				if(pointer.isSkipping(false)) return;
-			if(readModifier) {
+			if(pointer.GetDelayAmt() > 0) return;
+			if(readDelayModifier) {
 				pointer.direction = GetModifiedDirection(modifiers[pointer.position.x, pointer.position.y], pointer.direction);
 				int j = GetDelayAmount(modifiers[pointer.position.x, pointer.position.y]);
-				pointer.SetSkip(j);
+				pointer.SetDelay(j);
 				if(j > 0) return;
 			}
 			pointer.position.x += DirectionHelper.GetX(pointer.direction);

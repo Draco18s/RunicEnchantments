@@ -102,11 +102,11 @@ namespace Assets.draco18s.config {
 
 		private static string ParseForControlSequences(string v) {
 			string pattern = "\\[([A-z_\\-]+),(\\d+)\\]";
-			Regex reg = new Regex(pattern);
+			//Regex reg = new Regex(pattern);
 			v = Regex.Replace(v, pattern, "<size=$2><sprite name=$1></size>");
 
 			pattern = "\\[\\\\n\\]";
-			reg = new Regex(pattern);
+			//reg = new Regex(pattern);
 			v = Regex.Replace(v, pattern, "\n");
 			return v;
 		}

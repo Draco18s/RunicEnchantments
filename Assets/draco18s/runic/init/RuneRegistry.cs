@@ -11,7 +11,7 @@ namespace Assets.draco18s.runic.init {
 		public static void Initialize() {
 			ALL_RUNES = new Dictionary<char, IExecutableRune>();
 			for(int i = 0; i < 10; i++) {
-				new RuneNumber(i,i.ToString()[0]).Register();
+				new RuneNumber(i, i.ToString()[0]).Register();
 			}
 			new RuneNumber(10, 'a').Register();
 			new RuneNumber(11, 'b').Register();
@@ -23,10 +23,10 @@ namespace Assets.draco18s.runic.init {
 			new RunePi(Math.PI, 'P').Register();
 
 			new RuneBlank().Register();
-			new RuneEntrySimple(Direction.LEFT,  '<').Register();
+			new RuneEntrySimple(Direction.LEFT, '<').Register();
 			new RuneEntrySimple(Direction.RIGHT, '>').Register();
-			new RuneEntrySimple(Direction.UP,    '^').Register();
-			new RuneEntrySimple(Direction.DOWN,  'v').Register();
+			new RuneEntrySimple(Direction.UP, '^').Register();
+			new RuneEntrySimple(Direction.DOWN, 'v').Register();
 			new RuneOutput('$', false).Register();
 			new RuneOutput('@', true).Register();
 			new RuneAddition().Register();
@@ -58,14 +58,14 @@ namespace Assets.draco18s.runic.init {
 			new RuneRotateStack(true, '{').Register();
 			new RuneRotateStack(false, '}').Register();
 			new RuneNegate().Register();
-			new RuneDirection(Direction.LEFT,  '←').Register();
+			new RuneDirection(Direction.LEFT, '←').Register();
 			new RuneDirection(Direction.RIGHT, '→').Register();
-			new RuneDirection(Direction.UP,    '↑').Register();
-			new RuneDirection(Direction.DOWN,  '↓').Register();
-			new RuneDirection(Direction.LEFT,  'L').Register();
+			new RuneDirection(Direction.UP, '↑').Register();
+			new RuneDirection(Direction.DOWN, '↓').Register();
+			new RuneDirection(Direction.LEFT, 'L').Register();
 			new RuneDirection(Direction.RIGHT, 'R').Register();
-			new RuneDirection(Direction.UP,    'U').Register();
-			new RuneDirection(Direction.DOWN,  'D').Register();
+			new RuneDirection(Direction.UP, 'U').Register();
+			new RuneDirection(Direction.DOWN, 'D').Register();
 			new RuneSelfObject().Register();
 			new RuneObjectPosition().Register();
 			new RuneVec3().Register();
@@ -74,14 +74,14 @@ namespace Assets.draco18s.runic.init {
 			new RuneTenHundred(10, 'X').Register();
 			new RuneTenHundred(100, 'C').Register();
 			new RuneTenHundred(1000, 'Y').Register();
-			new RuneFork(Direction.LEFT,  '↤').Register();
+			new RuneFork(Direction.LEFT, '↤').Register();
 			new RuneFork(Direction.RIGHT, '↦').Register();
-			new RuneFork(Direction.UP,    '↥').Register();
-			new RuneFork(Direction.DOWN,  '↧').Register();
-			new RuneFork(Direction.LEFT,  'H').Register();
+			new RuneFork(Direction.UP, '↥').Register();
+			new RuneFork(Direction.DOWN, '↧').Register();
+			new RuneFork(Direction.LEFT, 'H').Register();
 			new RuneFork(Direction.RIGHT, 'K').Register();
-			new RuneFork(Direction.UP,    'I').Register();
-			new RuneFork(Direction.DOWN,  'J').Register();
+			new RuneFork(Direction.UP, 'I').Register();
+			new RuneFork(Direction.DOWN, 'J').Register();
 			new RuneFizzle().Register();
 			new RuneDelay().Register();
 			new RuneReadChar().Register();
@@ -105,6 +105,16 @@ namespace Assets.draco18s.runic.init {
 			new RuneEval().Register();
 			new RuneBranchFunction().Register();
 			new RuneReflection().Register();
+			/*List<char> runeList = new List<char>();
+			foreach(char c in ALL_RUNES.Keys) {
+				runeList.Add(c);
+			}
+			runeList.Sort();
+			string str = "";
+			for(int i = 0; i < runeList.Count; i++) {
+				str += runeList[i];
+			}
+			Debug.Log(str);*/
 		}
 
 		public static char GetRuneChar(IExecutableRune rune) {
