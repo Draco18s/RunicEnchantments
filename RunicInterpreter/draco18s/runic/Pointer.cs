@@ -8,6 +8,7 @@ namespace RunicInterpreter.draco18s.runic {
 		protected int age = 0;
 		protected int mana;
 		protected int skip = 0;
+		protected int delay = 0;
 		protected ReadType readType = ReadType.EXECUTE;
 
 		protected List<object> stack;
@@ -110,8 +111,16 @@ namespace RunicInterpreter.draco18s.runic {
 			return r;
 		}
 
+		public int GetDelayAmt() {
+			return delay;
+		}
+
 		public void SetSkip(int amt) {
 			skip += amt;
+		}
+
+		public void SetDelay(int amt) {
+			delay += amt;
 		}
 
 		public void SetReadType(ReadType t) {
