@@ -220,6 +220,8 @@ namespace RunicInterpreter.draco18s.runic {
 
 		public Direction GetModifiedDirection(char modifier, Direction original) {
 			// a̖a̗a̩a̠a̻ àáa̍āå a̎a͈a̿a͇
+			int dir = (int)original;
+			Direction ndir;
 			switch(modifier) {
 				case '͔':
 				case '᷾':
@@ -233,6 +235,41 @@ namespace RunicInterpreter.draco18s.runic {
 				case '̬':
 				case '̌':
 					return Direction.DOWN;
+				case '̖':
+				case '̀':
+					if(dir <= 1) {
+						return DirectionHelper.RotateCCW(original);
+					}
+					else {
+						return DirectionHelper.RotateCW(original);
+					}
+				case '̗':
+				case '́':
+					if(dir % 2 == 0) {
+						int a = 2 - dir;
+						return DirectionHelper.Reflect((Direction)a);
+					}
+					else {
+						int a = 4 - dir;
+						return DirectionHelper.Reflect((Direction)a);
+					}
+				case '̩':
+				case '̍':
+					ndir = Direction.RIGHT;
+					if(original == ndir || original == DirectionHelper.Reflect(ndir)) {
+						return DirectionHelper.Reflect(original);
+					}
+					return original;
+				case '̠':
+				case '̄':
+					ndir = Direction.DOWN;
+					if(original == ndir || original == DirectionHelper.Reflect(ndir)) {
+						return DirectionHelper.Reflect(original);
+					}
+					return original;
+				case '̻':
+				case '̊':
+					return DirectionHelper.Reflect(original);
 			}
 			return original;
 		}
