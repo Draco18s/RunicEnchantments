@@ -62,14 +62,15 @@ namespace RunicInterpreter.draco18s.runic {
 
 		public bool Tick() {
 			foreach(Pointer pointer in pointers) {
+				bool delaying = pointer.GetDelayAmt()>0;
+				bool skipping = pointer.isSkipping(true);
 				pointer.Execute();
-				bool alreadySkipping = pointer.isSkipping(false);
 				if(pointer.GetReadType() == Pointer.ReadType.EXECUTE) {
 					if(pointer.position.x >= runes.GetLength(0) || pointer.position.y >= runes.GetLength(1)) {
 						pointer.DeductMana(pointer.GetMana());
 					}
-					else if(pointer.isSkipping(true) || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
-						AdvancePointer(pointer,!alreadySkipping);
+					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
+						AdvancePointer(pointer,!delaying && !skipping);
 					}
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_CHAR) {
@@ -203,7 +204,7 @@ namespace RunicInterpreter.draco18s.runic {
 			}
 		}
 
-		private int GetDelayAmount(char modifier) {
+		public int GetDelayAmount(char modifier) {
 			switch(modifier) {
 				case '̇':// ̇
 					return 1;
@@ -218,6 +219,7 @@ namespace RunicInterpreter.draco18s.runic {
 		}
 
 		public Direction GetModifiedDirection(char modifier, Direction original) {
+			// a̖a̗a̩a̠a̻ àáa̍āå a̎a͈a̿a͇
 			switch(modifier) {
 				case '͔':
 				case '᷾':
