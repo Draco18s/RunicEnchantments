@@ -26,11 +26,11 @@ namespace Assets.draco18s.runic {
 					char cat = s2[x];
 					UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(cat);
 					if(uc == UnicodeCategory.NonSpacingMark || uc == UnicodeCategory.EnclosingMark || uc == UnicodeCategory.OtherNotAssigned) {
-						s2.Remove(x, 1);
+						s2 = s2.Remove(x, 1);
 					}
 				}
 				if(s2.Length > max) {
-					max = s.Length;
+					max = s2.Length;
 				}
 			}
 			//char[,] runesCodes = new char[max,lines.Length];
@@ -56,9 +56,8 @@ namespace Assets.draco18s.runic {
 							entries.Add(new Vector2Int(x, y));
 						}
 					}
-					int o = 1;
-					while(x + mutateOffset + o < lines[y].Length) {
-						char mod = lines[y][x + mutateOffset + o];
+					while(x + mutateOffset + 1 < lines[y].Length) {
+						char mod = lines[y][x + mutateOffset + 1];
 						UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(mod);
 						if(uc == UnicodeCategory.NonSpacingMark || uc == UnicodeCategory.EnclosingMark || uc == UnicodeCategory.OtherNotAssigned) {
 							if(modifiers[x, y] != ' ') {
@@ -76,7 +75,6 @@ namespace Assets.draco18s.runic {
 						else {
 							break;
 						}
-						o++;
 					}
 				}
 			}

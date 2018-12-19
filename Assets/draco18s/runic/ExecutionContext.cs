@@ -64,14 +64,15 @@ namespace Assets.draco18s.runic {
 		public bool Tick() {
 			pointers.RemoveAll(x => x.GetMana() <= 0);
 			foreach(Pointer pointer in pointers) {
+				bool alreadySkipping = pointer.GetDelayAmt()>0;
+				bool skipping = pointer.isSkipping(true);
 				pointer.Execute();
-				bool alreadySkipping = pointer.isSkipping(false);
 				if(pointer.GetReadType() == Pointer.ReadType.EXECUTE) {
 					if(pointer.position.x >= runes.GetLength(0) || pointer.position.y >= runes.GetLength(1)) {
 						pointer.DeductMana(pointer.GetMana());
 					}
-					else if(pointer.isSkipping(true) || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
-						AdvancePointer(pointer,!alreadySkipping);
+					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
+						AdvancePointer(pointer,!alreadySkipping && !skipping);
 					}
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_CHAR) {
@@ -204,7 +205,7 @@ namespace Assets.draco18s.runic {
 			}
 		}
 
-		private int GetDelayAmount(char modifier) {
+		public int GetDelayAmount(char modifier) {
 			switch(modifier) {
 				case '̇':// ̇
 					return 1;
@@ -219,6 +220,7 @@ namespace Assets.draco18s.runic {
 		}
 
 		public Direction GetModifiedDirection(char modifier, Direction original) {
+			// a̖a̗a̩a̠a̻ àáa̍āå a̎a͈a̿a͇
 			switch(modifier) {
 				case '͔':
 				case '᷾':
@@ -283,6 +285,7 @@ namespace Assets.draco18s.runic {
 			else {
 				runes[x, y] = r;
 			}
+			GameObject.Find("Canvas").GetComponent<SceneUI>().UpdateText(x,y,c);
 		}
 
 		internal void SetModifier(int x, int y, char c) {

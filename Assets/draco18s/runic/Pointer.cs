@@ -102,12 +102,13 @@ namespace Assets.draco18s.runic {
 
 		public void Execute() {
 			age++;
+			delay = Math.Max(delay-1,0);
 		}
 
 		public bool isSkipping(bool reduce) {
 			bool r = skip > 0;
 			if(reduce)
-				skip = Math.Max(skip-1,0);
+				skip = Math.Max(skip - 1, 0);
 			return r;
 		}
 

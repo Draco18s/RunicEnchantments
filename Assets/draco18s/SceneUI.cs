@@ -70,6 +70,8 @@ public class SceneUI : MonoBehaviour {
 		ExecutionContext context;
 		ParseError err = Parser.Parse(code, source, out context);
 		if(err.type != ParseErrorType.NONE || context == null) {
+			transform.Find("CodeField").GetComponent<TMP_InputField>().text = code;
+			transform.Find("CodeField/Text Area/markup").GetComponent<TMP_Text>().text = "";
 			ShowError(err);
 			yield break;
 		}
@@ -105,7 +107,10 @@ public class SceneUI : MonoBehaviour {
 				m = m.Substring(0,m.Length-1) + cat;
 			}
 			else {
-				m += ' ';
+				if(cat != '\n')
+					m += ' ';
+				else
+					m += cat;
 				r += cat;
 			}
 		}
@@ -178,5 +183,17 @@ public class SceneUI : MonoBehaviour {
 	private void ShowError(ParseError err) {
 		transform.Find("Button").gameObject.GetComponent<Button>().interactable = true;
 		Debug.Log(err.type + ": '" + err.character + "' @ " + err.pos);
+	}
+
+	public void UpdateText(int x, int y, char c) {
+		string r = transform.Find("CodeField").GetComponent<TMP_InputField>().text;
+
+		string[] s = r.Split('\n');
+		char[] cc = s[y].ToCharArray();
+		cc[x] = c;
+		s[y] = cc.ArrayToString();
+		r = string.Join("\n", s);
+
+		transform.Find("CodeField").GetComponent<TMP_InputField>().text = r;
 	}
 }
