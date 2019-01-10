@@ -1,6 +1,7 @@
 ﻿using Assets.draco18s.runic.init;
 using Assets.draco18s.util;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
@@ -44,6 +45,13 @@ namespace Assets.draco18s.runic.runes {
 						}
 						double c = MathHelper.GetValue((ValueType)b) / d;
 						pointer.Push(c);
+					}
+				}
+				else if(a is ValueType && b is string) {
+					string s = (string)b;
+					int n = (int)MathHelper.GetValue((ValueType)a);
+					foreach(string chk in s.ChunksUpto(n)) {
+						pointer.Push(chk);
 					}
 				}
 				else {

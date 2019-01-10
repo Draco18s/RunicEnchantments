@@ -4,10 +4,17 @@ using UnityEngine;
 namespace Assets.draco18s.runic.runes {
 	public class RuneSwap : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			object a = pointer.Pop();
-			object b = pointer.Pop();
-			pointer.Push(a);
-			pointer.Push(b);
+			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+			if(modifier == '̹') {
+				pointer.SwapStacksStack();
+			}
+			else {
+				if(pointer.GetStackSize() < 2) return true;
+				object a = pointer.Pop();
+				object b = pointer.Pop();
+				pointer.Push(a);
+				pointer.Push(b);
+			}
 			return true;
 		}
 

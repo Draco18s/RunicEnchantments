@@ -38,5 +38,10 @@ namespace Assets.draco18s.util {
 			list.RotateListLeft();
 			list.Reverse();
 		}
+
+		public static IEnumerable<string> ChunksUpto(this string str, int maxChunkSize) {
+			for(int i = 0; i < str.Length; i += maxChunkSize)
+				yield return str.Substring(i, Math.Min(maxChunkSize, str.Length - i));
+		}
 	}
 }

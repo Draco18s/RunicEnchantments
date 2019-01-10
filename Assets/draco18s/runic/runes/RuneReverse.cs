@@ -4,7 +4,13 @@ using UnityEngine;
 namespace Assets.draco18s.runic.runes {
 	public class RuneReverse : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			pointer.ReverseStack();
+			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+			if(modifier == '̹') {
+				pointer.ReverseStacksStack();
+			}
+			else {
+				pointer.ReverseStack();
+			}
 			return true;
 		}
 

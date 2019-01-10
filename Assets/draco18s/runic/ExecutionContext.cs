@@ -1,5 +1,6 @@
 ﻿using Assets.draco18s.runic.init;
 using Assets.draco18s.runic.runes;
+using Assets.draco18s.util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -73,6 +74,24 @@ namespace Assets.draco18s.runic {
 					}
 					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
 						AdvancePointer(pointer,!alreadySkipping && !skipping);
+					}
+				}
+				else if(pointer.GetReadType() == Pointer.ReadType.READ_NUM) {
+					IExecutableRune r = runes[pointer.position.x, pointer.position.y];
+					if(r is RuneNumber) {
+						int j = 0;
+						int n = ((RuneNumber)r).value;
+						if(pointer.GetStackSize() > 0) {
+							object o = pointer.Pop();
+							if(o is ValueType && MathHelper.IsInteger((ValueType)o)) {
+								j = (int)MathHelper.GetValue((ValueType)o);
+							}
+						}
+						pointer.Push(j * 10 + n);
+						AdvancePointer(pointer, false);
+					}
+					else {
+						pointer.SetReadType(Pointer.ReadType.EXECUTE);
 					}
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_CHAR) {

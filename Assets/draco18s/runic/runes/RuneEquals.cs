@@ -7,6 +7,10 @@ namespace Assets.draco18s.runic.runes {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			bool r = a.Equals(b);
+			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+			if(modifier == '̸') {
+				r = !r;
+			}
 			pointer.Push(r ? 1 : 0);
 			return true;
 		}

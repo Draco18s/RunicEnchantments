@@ -1,4 +1,4 @@
-using Assets.draco18s.runic.init;
+﻿using Assets.draco18s.runic.init;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +13,13 @@ namespace Assets.draco18s.runic.runes {
 		}
 
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			pointer.RotateStack(rotLeft);
+			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+			if(modifier == '̹') {
+				pointer.RotateStacksStack(rotLeft);
+			}
+			else {
+				pointer.RotateStack(rotLeft);
+			}
 			return true;
 		}
 

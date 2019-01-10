@@ -53,6 +53,10 @@ namespace Assets.draco18s.runic.runes {
 					case 'a':
 						pointer.Push(Math.Atan(x));
 						break;
+					case 'R':
+						Random rand = new Random();
+						pointer.Push(rand.Next((int)x));
+						break;
 				}
 			}
 			return true;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.draco18s.runic {
 	public static class Parser {
@@ -90,12 +91,20 @@ namespace Assets.draco18s.runic {
 			context = new ExecutionContext(runes, entries, modifiers, attatchedGameObj).SetReader(DefaultReader).SetWriter(DefaultWriter);
 			return new ParseError(ParseErrorType.NONE, Vector2Int.zero, ' ');
 		}
-
+		public static int inputInd = 0;
+		public static string inputStr = "";
 		public static object DefaultReader() {
+			if(inputInd == -1) {
+				InputField inputField = GameObject.Find("Canvas/InputField").GetComponent<InputField>();
+				if(inputField == null) return true;
+
+				inputStr = inputField.text;
+				inputInd = 0;
+			}
 			StringBuilder sb = new StringBuilder();
 			bool forceread = false;
-			while(Console.In.Peek() != -1) {
-				char c = (char)Console.In.Read();
+			while(inputInd < inputStr.Length) {
+				char c = Read();
 				if(c == '\r') continue;
 				if(!forceread && char.IsWhiteSpace(c)) break;
 				if(!forceread && c == '\\') {
@@ -104,26 +113,37 @@ namespace Assets.draco18s.runic {
 				else {
 					forceread = false;
 					sb.Append(c);
+					//if(context.GetModifier(pointer.position.x, pointer.position.y) == '͍') {
+					//	break;
+					//}
 				}
 			}
-
 			double d;
 			string s = sb.ToString();
 			if(double.TryParse(s, out d)) {
-				return d;
+				if(Math.Abs(d - (int)d) < Mathf.Epsilon) {
+					return (int)d;
+				}
+				return (d);
 			}
 			else if(sb.Length > 1) {
-				return s;
+				return (s);
 			}
 			else if(sb.Length > 0) {
-				return s[0];
+				return (s[0]);
 			}
 			return null;
 		}
 
 		public static object DefaultWriter(object o) {
-			Console.Out.Write(o);
+			Debug.Log(o);
 			return o;
+		}
+
+		private static char Read() {
+			char c = inputStr[inputInd];
+			inputInd++;
+			return c;
 		}
 	}
 }

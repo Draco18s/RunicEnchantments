@@ -12,6 +12,7 @@ namespace Assets.draco18s.runic {
 		protected ReadType readType = ReadType.EXECUTE;
 
 		protected List<object> stack;
+
 		protected List<List<object>> substacks;
 
 		public Vector2Int position;
@@ -23,11 +24,6 @@ namespace Assets.draco18s.runic {
 			substacks = new List<List<object>>();
 			direction = d;
 			position = pos;
-		}
-
-		public void RotateStack(bool rotLeft) {
-			if(rotLeft) stack.RotateListLeft();
-			else stack.RotateListRight();
 		}
 
 		public int GetAge() {
@@ -45,6 +41,7 @@ namespace Assets.draco18s.runic {
 		public void Push(object o) {
 			stack.Add(o);
 		}
+
 
 		public object Pop() {
 			if(stack.Count > 0) {
@@ -78,7 +75,8 @@ namespace Assets.draco18s.runic {
 			newStack.Reverse();
 			substacks.Add(stack);
 			stack = newStack;
-			DeductMana(1);
+			if(size > 0)
+				DeductMana(1);
 		}
 
 		public void PushNewStack() {
@@ -98,6 +96,56 @@ namespace Assets.draco18s.runic {
 				Push(oldStack[0]);
 				oldStack.RemoveAt(0);
 			}
+		}
+
+		public void ReverseStacksStack() {
+			substacks.Reverse();
+		}
+
+		public void RotateStack(bool rotLeft) {
+			if(rotLeft) stack.RotateListLeft();
+			else stack.RotateListRight();
+		}
+
+		public void RotateStacksStack(bool rotLeft) {
+			if(rotLeft) substacks.RotateListLeft();
+			else substacks.RotateListRight();
+		}
+
+		public void SwapStacksStack() {
+			if(substacks.Count < 2) return;
+			List<object> a = PopStack();
+			List<object> b = PopStack();
+			substacks.Add(a);
+			substacks.Add(b);
+		}
+
+		public void SwapNStacksStack(int n) {
+			bool right = n > 0;
+			if(n < 0) n *= -1;
+			if(substacks.Count < n) n = substacks.Count;
+			List<List<object>> list = new List<List<object>>();
+			for(int i = 0; i < n; i++) {
+				list.Add(PopStack());
+			}
+			list.Reverse();
+			if(right)
+				list.RotateListRight();
+			else
+				list.RotateListLeft();
+			for(int i = 0; i < n; i++) {
+				substacks.Add(list[i]);
+			}
+		}
+
+		List<object> PopStack() {
+			if(substacks.Count > 0) {
+				List<object> o = substacks[substacks.Count - 1];
+				substacks.RemoveAt(substacks.Count - 1);
+				return o;
+			}
+			mana = 0;
+			return null;
 		}
 
 		public void Execute() {
@@ -154,7 +202,7 @@ namespace Assets.draco18s.runic {
 		}
 
 		public enum ReadType {
-			READ_CHAR, READ_CHAR_CONTINUOUS, READ_STR,EXECUTE
+			READ_CHAR, READ_CHAR_CONTINUOUS, READ_STR, READ_NUM, EXECUTE
 		}
 	}
 }

@@ -1,20 +1,17 @@
-﻿using Assets.draco18s.runic.init;
-using System;
+using Assets.draco18s.runic.init;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.draco18s.runic.runes {
-	public class RuneReadInput : IExecutableRune {
+	public class RuneReadNumber : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
-			context.ReadInput(pointer);
+			pointer.SetReadType(Pointer.ReadType.READ_NUM);
 			return true;
 		}
 
 		public IExecutableRune Register() {
-			RuneRegistry.ALL_RUNES.Add('i', this);
+			RuneRegistry.ALL_RUNES.Add('‘', this);
 			return this;
 		}
 	}

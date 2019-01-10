@@ -19,8 +19,15 @@ namespace Assets.draco18s.runic.init {
 			new RuneNumber(13, 'd').Register();
 			new RuneNumber(14, 'e').Register();
 			new RuneNumber(15, 'f').Register();
+			new RuneNumber(-1, 'ɩ').Register();
+			new RuneNumber(-1, 'í').Register();
 			new RunePi(Math.PI, 'π').Register();
 			new RunePi(Math.PI, 'P').Register();
+			new RunePi(Math.E, 'é').Register();
+			//new RunePi(0.1f, '‰').Register();//not sure I like this
+			//new RunePi(0.01f, '¢').Register();
+			//new RunePi(0.001f, '¥').Register();
+			new RunePi(0.000001f, 'µ').Register();//‘1233
 
 			new RuneBlank().Register();
 			new RuneEntrySimple(Direction.LEFT, '<').Register();
@@ -105,6 +112,7 @@ namespace Assets.draco18s.runic.init {
 			new RuneEval().Register();
 			new RuneBranchFunction().Register();
 			new RuneReflection().Register();
+			new RuneReadNumber().Register();
 			/*List<char> runeList = new List<char>();
 			foreach(char c in ALL_RUNES.Keys) {
 				runeList.Add(c);

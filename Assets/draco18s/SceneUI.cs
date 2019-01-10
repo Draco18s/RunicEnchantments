@@ -61,7 +61,8 @@ public class SceneUI : MonoBehaviour {
 
 	private IEnumerator Execute(string code) {
 		FixTextBoxes(code);
-		RuneReadInput.inputInd = -1;
+		Parser.inputStr = transform.Find("InputField").GetComponent<InputField>().text;
+		Parser.inputInd = -1;
 		foreach(GameObject go in pointerObjs.Values) {
 			Destroy(go);
 		}
