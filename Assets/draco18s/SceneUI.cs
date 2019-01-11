@@ -61,7 +61,7 @@ public class SceneUI : MonoBehaviour {
 
 	private IEnumerator Execute(string code) {
 		FixTextBoxes(code);
-		Parser.inputStr = transform.Find("InputField").GetComponent<InputField>().text;
+		Parser.inputStr = transform.Find("InputField").GetComponent<TMP_InputField>().text;
 		Parser.inputInd = -1;
 		foreach(GameObject go in pointerObjs.Values) {
 			Destroy(go);

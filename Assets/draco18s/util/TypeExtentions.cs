@@ -43,5 +43,26 @@ namespace Assets.draco18s.util {
 			for(int i = 0; i < str.Length; i += maxChunkSize)
 				yield return str.Substring(i, Math.Min(maxChunkSize, str.Length - i));
 		}
+
+		public static string Reverse(this string s) {
+			char[] charArray = s.ToCharArray();
+			List<char> l = charArray.ToList();
+			l.Reverse();
+			return new string(l.ToArray());
+		}
+
+		public static string RotateLeft(this string s) {
+			char[] charArray = s.ToCharArray();
+			List<char> l = charArray.ToList();
+			l.RotateListLeft();
+			return new string(l.ToArray());
+		}
+
+		public static string RotateRight(this string s) {
+			char[] charArray = s.ToCharArray();
+			List<char> l = charArray.ToList();
+			l.RotateListRight();
+			return new string(l.ToArray());
+		}
 	}
 }

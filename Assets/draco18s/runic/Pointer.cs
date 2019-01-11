@@ -57,6 +57,10 @@ namespace Assets.draco18s.runic {
 			stack.Reverse();
 		}
 
+		public int GetStacksStackSize() {
+			return substacks.Count+1;
+		}
+
 		public int GetStackSize() {
 			return stack.Count;
 		}
@@ -99,7 +103,9 @@ namespace Assets.draco18s.runic {
 		}
 
 		public void ReverseStacksStack() {
+			substacks.Add(stack);
 			substacks.Reverse();
+			stack = PopStack();
 		}
 
 		public void RotateStack(bool rotLeft) {
@@ -108,22 +114,27 @@ namespace Assets.draco18s.runic {
 		}
 
 		public void RotateStacksStack(bool rotLeft) {
+			substacks.Add(stack);
 			if(rotLeft) substacks.RotateListLeft();
 			else substacks.RotateListRight();
+			stack = PopStack();
 		}
 
 		public void SwapStacksStack() {
-			if(substacks.Count < 2) return;
+			if(substacks.Count < 1) return;
+			substacks.Add(stack);
 			List<object> a = PopStack();
 			List<object> b = PopStack();
 			substacks.Add(a);
 			substacks.Add(b);
+			stack = PopStack();
 		}
 
 		public void SwapNStacksStack(int n) {
 			bool right = n > 0;
 			if(n < 0) n *= -1;
-			if(substacks.Count < n) n = substacks.Count;
+			if(substacks.Count < n-1) n = substacks.Count;
+			substacks.Add(stack);
 			List<List<object>> list = new List<List<object>>();
 			for(int i = 0; i < n; i++) {
 				list.Add(PopStack());
@@ -136,6 +147,7 @@ namespace Assets.draco18s.runic {
 			for(int i = 0; i < n; i++) {
 				substacks.Add(list[i]);
 			}
+			stack = PopStack();
 		}
 
 		List<object> PopStack() {

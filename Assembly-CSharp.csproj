@@ -145,6 +145,7 @@
     <Compile Include="Assets\draco18s\util\SpriteLoader.cs" />
     <Compile Include="Assets\draco18s\util\TooltipTrigger.cs" />
     <Compile Include="Assets\draco18s\util\TypeExtentions.cs" />
+    <Compile Include="Assets\draco18s\util\WordDictionary.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

@@ -112,7 +112,8 @@ namespace Assets.draco18s.runic.init {
 			new RuneEval().Register();
 			new RuneBranchFunction().Register();
 			new RuneReflection().Register();
-			new RuneReadNumber().Register();
+			new RuneReadNumber('‘').Register();
+			new RuneReadNumber('´').Register();
 			/*List<char> runeList = new List<char>();
 			foreach(char c in ALL_RUNES.Keys) {
 				runeList.Add(c);

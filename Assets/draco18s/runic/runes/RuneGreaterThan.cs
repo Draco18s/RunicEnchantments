@@ -13,11 +13,11 @@ namespace Assets.draco18s.runic.runes {
 			if(a is ValueType && b is ValueType) {
 				MathHelper.NumericRelationship q = MathHelper.Compare((ValueType)b, (ValueType)a);
 				bool r = q == MathHelper.NumericRelationship.GreaterThan;
-				/*char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
-				if(modifier == '̸') {
+				char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+				if(modifier == '̸' || modifier == '͍') {
 					r = !r;
-				}*/
-				pointer.Push(r);
+				}
+				pointer.Push(r ? 1 : 0);
 			}
 			return true;
 		}

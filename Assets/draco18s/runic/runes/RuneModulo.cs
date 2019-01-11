@@ -18,13 +18,19 @@ namespace Assets.draco18s.runic.runes {
 					}
 					else {
 						double d = MathHelper.GetValue((ValueType)a);
-						if(d == 0) {
+						if(Math.Abs(d) < Mathf.Epsilon) {
 							pointer.DeductMana(pointer.GetMana());
 							return true;
 						}
 						double c = MathHelper.GetValue((ValueType)b) % d;
 						pointer.Push(c);
 					}
+				}
+				else if(a is ValueType && b is string) {
+					int c = (int)MathHelper.GetValue((ValueType)a);
+					if(c < 0)
+						c = ((string)b).Length + c;
+					pointer.Push(((string)b)[c]);
 				}
 				else {
 

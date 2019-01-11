@@ -1,4 +1,5 @@
 using Assets.draco18s.runic.init;
+using Assets.draco18s.util;
 using System;
 using UnityEngine;
 
@@ -6,7 +7,13 @@ namespace Assets.draco18s.runic.runes {
 	public class RuneEval : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
-			if(o is string) {
+			if(o is ValueType) {
+				int j = (int)MathHelper.GetValue((ValueType)o);
+				string s = WordDictionary.GetWord(j);
+				if(s != null)
+					pointer.Push(s);
+			}
+			else if(o is string) {
 				string str = (string)o;
 				int size;
 				//pointer.DeductMana((int)Math.Ceiling(Math.Log(str.Length)));

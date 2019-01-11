@@ -27,16 +27,13 @@ namespace Assets.draco18s.runic.runes {
 					int n = (int)MathHelper.GetValue((ValueType)a);
 					string s = (string)b;
 					if(n > 0) {
-						string first = s.Substring(0, n);
-						string second = s.Substring(n, s.Length - n);
-						if(first.Length > 0)
-							pointer.Push(first);
-						if(second.Length > 0)
-							pointer.Push(second);
+						string second = s.Substring(0, s.Length - n);
+						pointer.Push(second);
 					}
 					else if(n < 0) {
 						n *= -1;
-						string second = s.Substring(0, s.Length - n);
+						string first = s.Substring(0, n);
+						string second = s.Substring(n, s.Length - n);
 						pointer.Push(second);
 					}
 					else {

@@ -54,7 +54,16 @@ namespace Assets.draco18s.runic {
 					else {
 						runes[x, y] = r;
 						if(r is RuneEntrySimple /*&& (x == 0 || y == 0 || x == max - 1 || y == lines.Length - 1)*/) {
-							entries.Add(new Vector2Int(x, y));
+							char cat2 = (x + mutateOffset + 1 < lines[y].Length ? lines[y][x + mutateOffset + 1] : ' ');
+							if((cat == '<' || cat == '>') && cat2 == '̸') {
+								if(cat == '<')
+									runes[x, y] = RuneRegistry.GetRune('(');
+								if(cat == '>')
+									runes[x, y] = RuneRegistry.GetRune(')');
+							}
+							else {
+								entries.Add(new Vector2Int(x, y));
+							}
 						}
 					}
 					while(x + mutateOffset + 1 < lines[y].Length) {
