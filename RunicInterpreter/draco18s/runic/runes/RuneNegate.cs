@@ -10,9 +10,20 @@ namespace RunicInterpreter.draco18s.runic.runes {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			if(o is ValueType) {
-				pointer.Push(o);
-				pointer.Push(-1);
-				mult.Execute(pointer, context);
+				char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+				if(modifier == '͍') {
+					if(o.Equals(0)) {
+						pointer.Push(1);
+					}
+					else {
+						pointer.Push(0);
+					}
+				}
+				else {
+					pointer.Push(o);
+					pointer.Push(-1);
+					mult.Execute(pointer, context);
+				}
 			}
 			return true;
 		}

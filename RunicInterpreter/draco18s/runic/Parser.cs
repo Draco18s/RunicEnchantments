@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using RunicInterpreter.draco18s.util;
 
 namespace RunicInterpreter.draco18s.runic {
 	public static class Parser {
@@ -54,7 +55,16 @@ namespace RunicInterpreter.draco18s.runic {
 					else {
 						runes[x, y] = r;
 						if(r is RuneEntrySimple /*&& (x == 0 || y == 0 || x == max - 1 || y == lines.Length - 1)*/) {
-							entries.Add(new Vector2Int(x, y));
+							char cat2 = (x + mutateOffset + 1 < lines[y].Length ? lines[y][x + mutateOffset + 1] : ' ');
+							if((cat == '<' || cat == '>') && cat2 == '̸') {
+								if(cat == '<')
+									runes[x, y] = RuneRegistry.GetRune('(');
+								if(cat == '>')
+									runes[x, y] = RuneRegistry.GetRune(')');
+							}
+							else {
+								entries.Add(new Vector2Int(x, y));
+							}
 						}
 					}
 					while(x + mutateOffset + 1 < lines[y].Length) {
@@ -111,7 +121,10 @@ namespace RunicInterpreter.draco18s.runic {
 			double d;
 			string s = sb.ToString();
 			if(double.TryParse(s, out d)) {
-				return d;
+				if(MathHelper.Approximately((float)d, (int)d)) {
+					return (int)d;
+				}
+				return (d);
 			}
 			else if(sb.Length > 1) {
 				return s;

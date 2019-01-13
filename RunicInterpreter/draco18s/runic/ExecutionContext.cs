@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using RunicInterpreter.draco18s.util;
 
 namespace RunicInterpreter.draco18s.runic {
 	public class ExecutionContext {
@@ -71,6 +72,24 @@ namespace RunicInterpreter.draco18s.runic {
 					}
 					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
 						AdvancePointer(pointer,!delaying && !skipping);
+					}
+				}
+				else if(pointer.GetReadType() == Pointer.ReadType.READ_NUM) {
+					IExecutableRune r = runes[pointer.position.x, pointer.position.y];
+					if(r is RuneNumber) {
+						int j = 0;
+						int n = ((RuneNumber)r).value;
+						if(pointer.GetStackSize() > 0) {
+							object o = pointer.Pop();
+							if(o is ValueType && MathHelper.IsInteger((ValueType)o)) {
+								j = (int)MathHelper.GetValue((ValueType)o);
+							}
+						}
+						pointer.Push(j * 10 + n);
+						AdvancePointer(pointer, false);
+					}
+					else {
+						pointer.SetReadType(Pointer.ReadType.EXECUTE);
 					}
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_CHAR) {
@@ -313,7 +332,7 @@ namespace RunicInterpreter.draco18s.runic {
 			outputWriter(o);
 		}
 
-		internal void SetRune(int x, int y, char c) {
+		public void SetRune(int x, int y, char c) {
 			IExecutableRune r = RuneRegistry.GetRune(c);
 			if(r == null) {
 				runes[x, y] = new RuneCharLiteral(c);
@@ -323,7 +342,7 @@ namespace RunicInterpreter.draco18s.runic {
 			}
 		}
 
-		internal void SetModifier(int x, int y, char c) {
+		public void SetModifier(int x, int y, char c) {
 			modifiers[x, y] = c;
 		}
 	}

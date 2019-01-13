@@ -9,6 +9,7 @@ namespace RunicInterpreter.draco18s.runic.runes {
 		int value;
 		char c;
 		private RuneMultiplication multi = new RuneMultiplication();
+		private RuneDivision divide = new RuneDivision();
 		public RuneTenHundred(int v, char c) {
 			value = v;
 			this.c = c;
@@ -16,9 +17,17 @@ namespace RunicInterpreter.draco18s.runic.runes {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
 			if(o is ValueType) {
-				pointer.Push(o);
-				pointer.Push(value);
-				multi.Execute(pointer, context);
+				char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+				if(modifier == '͍') {
+					pointer.Push(o);
+					pointer.Push(value);
+					divide.Execute(pointer, context);
+				}
+				else {
+					pointer.Push(o);
+					pointer.Push(value);
+					multi.Execute(pointer, context);
+				}
 			}
 			return true;
 		}

@@ -47,6 +47,29 @@ namespace RunicInterpreter.draco18s.runic.runes {
 						pointer.Push(c);
 					}
 				}
+				else if(a is ValueType && b is string) {
+					string s = (string)b;
+					int n = (int)MathHelper.GetValue((ValueType)a);
+					int m = 0;
+					int r = 0;
+					if(n < 0) {
+						n *= -1;
+						m = (int)(Math.Ceiling((float)s.Length / n) * n);
+						r = m - s.Length;
+						s = s.PadLeft(m);
+					}
+					bool b2 = true;
+					foreach(string chk in s.ChunksUpto(n)) {
+						if(b2 && r > 0) {
+							string chk2 = chk.Substring(r);
+							b2 = false;
+							pointer.Push(chk2);
+						}
+						else {
+							pointer.Push(chk);
+						}
+					}
+				}
 				else {
 
 				}

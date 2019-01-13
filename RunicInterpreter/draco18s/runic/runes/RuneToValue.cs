@@ -16,6 +16,8 @@ namespace RunicInterpreter.draco18s.runic.runes {
 				double d;
 				if(double.TryParse((string)o, out d))
 					pointer.Push(d);
+				else
+					pointer.Push(WordDictionary.GetIndex(((string)o).ToLower()));
 			}
 			return true;
 		}

@@ -16,8 +16,10 @@ namespace RunicInterpreter.draco18s.runic.runes {
 						int y = (int)MathHelper.GetValue((ValueType)a);
 						char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
 						context.AdvancePointer(pointer,false);
-						pointer.Push(pointer.position.x);
-						pointer.Push(pointer.position.y);
+						if(modifier != '͍') {
+							pointer.Push(pointer.position.x);
+							pointer.Push(pointer.position.y);
+						}
 						pointer.position = new Vector2Int(x, y);
 						pointer.direction = context.GetModifiedDirection(modifier, pointer.direction);
 						return false;

@@ -18,13 +18,19 @@ namespace RunicInterpreter.draco18s.runic.runes {
 					}
 					else {
 						double d = MathHelper.GetValue((ValueType)a);
-						if(d == 0) {
+						if(MathHelper.Approximately((float)d, 0)) {
 							pointer.DeductMana(pointer.GetMana());
 							return true;
 						}
 						double c = MathHelper.GetValue((ValueType)b) % d;
 						pointer.Push(c);
 					}
+				}
+				else if(a is ValueType && b is string) {
+					int c = (int)MathHelper.GetValue((ValueType)a);
+					if(c < 0)
+						c = ((string)b).Length + c;
+					pointer.Push(((string)b)[c]);
 				}
 				else {
 

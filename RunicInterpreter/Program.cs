@@ -43,7 +43,7 @@ namespace RunicInterpreter {
 				counter++;
 				continueExecuting = context.Tick();
 				yield return null;
-			} while(continueExecuting && counter < 10000);
+			} while(continueExecuting && counter < 1000000);
 		}
 
 		private static void ShowError(ParseError err) {

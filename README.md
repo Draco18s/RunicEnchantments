@@ -20,7 +20,7 @@ At the end of each update the following actiosn are performed (in order):
 |`0`-`9`| Integer Literals | Pushes the single digit value onto the stack |
 |`a`-`f`| Integer Literals | Literals for the values 10-15 |
 |`P`| Pi | Pushes the value of Pi onto the stack. Can also use `π` |
-|`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo (All math operations perform an implicit conversion to a number where possible). These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP. For strings, `+` concatenates as `yx` and `*` takes a number (cast to int) `y` and makes that many copies of `x` (e.g. `"asdf"3*` pushes `"asdfasdfasdf" onto the stack) |
+|`+` `-` `*` `,` `%`| Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo (All math operations perform an implicit conversion to a number where possible). These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP. For strings, `+` concatenates as `yx` and `*` takes a number (cast to int) `y` and makes that many copies of `x` (e.g. `"asdf"3*` pushes `"asdfasdfasdf"` onto the stack) |
 |`X` `C` `Y` | Power of Ten | Multiplies the top value of the stack by 10, 100, and 1000 respectively. |
 |`Z`| Negate | Multiplies the top value on the stack by -1 |
 |`p`| Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |

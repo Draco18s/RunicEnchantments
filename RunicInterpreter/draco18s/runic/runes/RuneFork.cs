@@ -20,7 +20,21 @@ namespace RunicInterpreter.draco18s.runic.runes {
 				if(MathHelper.Compare(pointer.GetMana(), v) >= 0) {
 					int d = (int)MathHelper.GetValue(v);
 					pointer.DeductMana(d - 1);
-					context.SpawnPointer(new Pointer(d,dir,pointer.position));
+					Pointer ptr = new Pointer(d, dir, pointer.position);
+					char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
+					if(modifier == '͍') {
+						List<object> items = new List<object>();
+						while(pointer.GetStackSize() > 0) {
+							items.Add(pointer.Pop());
+						}
+						items.Reverse();
+						foreach(object q in items) {
+							ptr.Push(q);
+							if(modifier != '͍')
+								pointer.Push(q);
+						}
+					}
+					context.SpawnPointer(ptr);
 					return true;
 				}
 				else {

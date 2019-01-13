@@ -1,11 +1,18 @@
 using RunicInterpreter.draco18s.runic.init;
+using RunicInterpreter.draco18s.util;
 using System;
 
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneEval : IExecutableRune {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object o = pointer.Pop();
-			if(o is string) {
+			if(o is ValueType) {
+				int j = (int)MathHelper.GetValue((ValueType)o);
+				string s = WordDictionary.GetWord(j);
+				if(s != null)
+					pointer.Push(s);
+			}
+			else if(o is string) {
 				string str = (string)o;
 				//pointer.DeductMana((int)Math.Ceiling(Math.Log(str.Length)));
 				Func<bool> execution = context.Eval(pointer, str, out int size);
