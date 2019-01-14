@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -104,8 +105,8 @@ namespace Assets.draco18s.runic {
 		public static string inputStr = "";
 		public static object DefaultReader() {
 			if(inputInd == -1) {
-				InputField inputField = GameObject.Find("Canvas/InputField").GetComponent<InputField>();
-				if(inputField == null) return true;
+				TMP_InputField inputField = GameObject.Find("Canvas/InputField").GetComponent<TMP_InputField>();
+				if(inputField == null) return null;
 
 				inputStr = inputField.text;
 				inputInd = 0;
