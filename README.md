@@ -20,14 +20,14 @@ At the end of each update the following actiosn are performed (in order):
 | `0`-`9` | Integer Literals | Pushes the single digit value onto the stack |
 | `a`-`f` | Integer Literals | Literals for the values 10-15 |
 | `ɩ` `í` | Integer Literals | Pushes the value of -1 onto the stack |
-| `P` | Pi | Pushes the value of Pi onto the stack. Can also use `π` |
+| `P` | Pi | Pushes the value of Pi onto the stack.<br/>Can also use `π` |
 | `é` | E | Pushes the value of *e* (2.71828...) onto the stack |
 | `µ` | -micro | Pushes the value `0.000001` to the stack |
-| `+` `-` `*` `,` `%` | Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo (All math operations perform an implicit conversion to a number where possible and are performed (popping `x`, then `y`) as `y?x`). These also operate on two Vectors where `,` is a Dot Product and `*` is a Cross Product. Division by 0 terminates the IP.<br/> For strings, `+` concatenates as `yx` and `*` takes a number (cast to int) `y` and makes that many copies of `x` (e.g. `"asdf"3*` pushes `"asdfasdfasdf" onto the stack), `-` removes `x` characters from the end of the string (negative values of `x` remove from the front), `,` splits the string into `x` sized chunks. (e.g. `>"11223344"3,` pushes the strings `112`,`233`, and `44` and negative values work from the end of the string, `>"11223344"3Z,` pushes the strings `11`,`223`, and `344`), and `%` when applied to a string pushes the char as pos `x` in the string to the stack: `((string)y)[x]`, if `x` is negative, the index is from the end (last character being `x=-1`) instead of the beginning of the string |
+| `+` `-` `*` `,` `%` | Mathematical operators | Addition, Subtraction, Multiplication, Division, and Modulo (All math operations perform an implicit conversion to a number where possible and are performed (popping `x`, then `y`) as `y?x`).<br/> For Vectors `+` and `-` are normal `,` is a Dot Product and `*` is a Cross Product.<br/> For strings:<ul><li> `+` concatenates as `yx` (identical to `q`)</li><li> `*` takes a number (cast to int) `y` and makes that many copies of `x` (e.g. `"asdf"3*` pushes `"asdfasdfasdf"` onto the stack)</li><li> `-` removes `x` characters from the end of the string</li><li> `,` splits the string into `x` sized chunks. (e.g. `>"11223344"3,` pushes the strings `112`,`233`, and `44`)</li><li> `%` when applied to a string pushes the char as pos `x` in the string to the stack: `y[x]`</li><li>Negative values of `x` operate in reverse (similar to Python)</li></ul> |
 | `X` `C` `Y` | Power of Ten | Multiplies the top value of the stack by 10, 100, and 1000 respectively |
 | `Z` | Negate | Multiplies the top value on the stack by -1 |
 | `p` | Power | Pops two values `x` and `y` and pushes `y^x` (`y` raised to the power `x`) onto the stack (e.g. `>23p$;` will print `8`) |
-| `A` | Math | Pops two values, `o` and `x`, if `o` is a character, it maps to the single-argument Math functions, passing `x` as the argument (grouped by relation): `S`,`C`,`T`,`i`,`o`,`a`: Sin, Cos, Tan, ASin, ACos, ATan. `f`,`c`,`r`: Floor, Ceiling, Round. `\| `: Absolute value. `e`,`q`,`l`,`L`: Exp, Sqrt, Log, Log10. `R`: Random value [0-`x`) |
+| `A` | Math | Pops two values, `o` and `x`, if `o` is a character, it maps to the single-argument Math functions, passing `x` as the argument (grouped by relation):<ul><li> `S`,`C`,`T`,`i`,`o`,`a`: Sin, Cos, Tan, ASin, ACos, ATan.</li><li> `f`,`c`,`r`: Floor, Ceiling, Round.</li><li> `\| `: Absolute value.</li><li> `e`,`q`,`l`,`L`: Exp, Sqrt, Log, Log10.</li><li> `R`: Random value `[0-x)`</li></ul> |
 | `>` `<` `^` `v` | Entry | Spawns an IP with the indicated facing with 10 mana at program start. Acts as an empty space otherwise |
 | `$` `@` | Output | `$` prints the top value of the stack to Debug.Log(), `@` dumps the entire stack and terminates the IP |
 | `i` | Input | Reads from input treating objects as whitespace-speparated values (eg. `123.4 qwerty` will first read a double value of `123.4` then on the next read, read the string `qwerty`). Using a `\` before a whitespace character will treat it as input (e.g. `as df` is two separate input strings while `as\ df` is one) |
@@ -35,8 +35,8 @@ At the end of each update the following actiosn are performed (in order):
 | `m` | Mana | Pushes the current mana value onto the stack |
 | `F` | Fizzle | Deducts 1 mana from the IP |
 | `M` | Min Mana | Acts as a threshold barrier. The top value of the stack is popped and compared to the IP's mana. If the mana is greater than the popped value, the IP advances. Otherwise the value is pushed back |
-| `\` `/` `\| ` `_` `#` | Reflectors | Changes the direction of an IP |
-| `U` `D` `L` `R` | Direction | Changes the pointers direction UP, DOWN, LEFT, RIGHT respectively. Can also use `↑` `↓` `←` `→` |
+| `\` `/` `\|` `_` `#` | Reflectors | Changes the direction of an IP |
+| `U` `D` `L` `R` | Direction | Changes the pointers direction UP, DOWN, LEFT, RIGHT respectively.<br/>Can also use `↑` `↓` `←` `→` |
 | `:` | Duplicator | Duplicates the top value on the stack |
 | `~` | Pop | Pops the top value off the stack and discards it |
 | `{` `}` | Rotate Stack | Rotates the entire stack left or right respectively |
@@ -45,8 +45,8 @@ At the end of each update the following actiosn are performed (in order):
 | `r` | Reverse | Reverses the stack |
 | `l` | Length | Pushes the current length of the stack onto the stack |
 | `o` | Sort | Pops ValueTypes off the stack until empty or a non-value is found (which is pushed back onto the stack). Sorts these values and pushes them back so that the smallest is on the top of the stack. Requires and consumes `n` mana where `n` is the size of the stack minus 10 |
-| `[` | Pop stack | Pop `x` off the stack and create a new stack, moving `x` (maximum the current stack) values from the old stack onto the new one (maintaining the same order). The new stack is completely isolated from the previous one, and an arbitrary amount of stacks can be created on top of each other. Costs 1 mana (unless `x` <= 0).
-| `[` | Push stack | Remove the current stack, moving its values to the top of the underlying stack. If the current stack is the last stack, `]` simply empties the stack |
+| `[` | Pop stack | Pop `x` off the stack and create a new stack, moving `x` (maximum the current stack) values from the old stack onto the new one (maintaining the same order). The new stack is completely isolated from the previous one, and an arbitrary amount of stacks can be created on top of each other. Costs 1 mana (unless `x`  0).
+| `]` | Push stack | Remove the current stack, moving its values to the top of the underlying stack. If the current stack is the last stack, `]` simply empties the stack |
 | `y` | Delay | IP NOPs and does not advance once. See also the delay modifiers |
 | `=` | Equals | Pops `x` and `y` and pushes `1` if they are equal, `0` otherwise. Modifying with `̸` inverts this (≠) |
 | `(` `)` | Less and Greater | Less than and Greater than respectively. Pushes `1` if true, pushes `0` otherwise |
@@ -56,17 +56,17 @@ At the end of each update the following actiosn are performed (in order):
 | `j` | Distance | Pops two GameObject or Vector3 off the stack and computes their distance |
 | `'` | Character literal | Next cell is read as a literal character |
 | `"` | String literal | IP enters reading mode and reads all cells as characters and concatenates them into a string on the top of the stack until another `"` is encountered. If the top of the stack is not a string, a new string is pushed onto the stack |
-|  \` | Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another \` is encountered |
-| `´` `‘` | Numerical (continuous) | Continuously reads numeric values, multiplying the previous by 10, then adding the current digit. This makes writing complex numbers easier. e.g. `‘275362` would put the value of `275,362` on the stack. Automatically stops reading when a non-numerical instruction is reached (NOPing and then executing it next cycle) |
-| `k` | To Char | Pops the top value off the stack and converts it to a Character |
+| <code>\`</code> | Character literal (continuous) | IP enters reading mode, pushing all cells onto the stack as characters until another \` is encountered |
+| `´` `‘` | Numerical (continuous) | Continuously reads numeric values, multiplying the previous by 10, then adding the current digit. This makes writing complex numbers easier. e.g. `‘275362` would put the value of `275,362` on the stack. Automatically stops reading when a non-numerical instruction is reached (NOPing and then executing it next cycle). Similar to string mode, if the top of the stack was already numerical, this command will utilize that value as if it had already been specified. e.g. if `15` was on top of the stack prior to the previous execution, the resulting value would be `15,275,362` |
+| `k` | To Char | Pops the top value off the stack and converts it to a Character. This command will also decompose a 1-length string to its composite character |
 | `n` | To Number | Pops the top value off the stack and converts it to a double (if it is a value type) or tries to parse it as a double (if it is a string) |
 | `q` | Concatenate | Pops two values off the top of the stack `x` and `y` and concatenates them together as `yx` and pushes them back onto the stack |
-| `u` | Uncat | Pops a value `x` off the stack. If it is a string it peeks at the next value on the stack. If it is a character it is popped `y` and performs `x.Split(y)`. Otherwise it decomposes the string into characters and pushes them back onto the stack in order. If `x` was instead a Vector, it is decomposed into three floats, pushed onto the stack in `x, y, z` order. Else `x` is converted to a string |
-| `I` `J` `H` `L` | Fork | Pops a value `x` off the stack. Spawns a new pointer in the indicated direction (I-up, J-down, H-left, K-right) with `x` mana. Requires `x` mana, consumes `x-1` mana. Can also use `↤` `↦` `↥` `↧` |
+| `u` | Uncat | Pops a value `x` off the stack. If it is a string it peeks at the next value on the stack. If it is a character it is popped `y` and performs `x.Split(y)`. Otherwise it decomposes the string into characters and pushes them back onto the stack in order.<br/> If `x` was instead a Vector, it is decomposed into three floats, pushed onto the stack in `x, y, z` order. Else `x` is converted to a string |
+| `I` `J` `H` `L` | Fork | Pops a value `x` off the stack. Spawns a new pointer in the indicated direction (I-up, J-down, H-left, K-right) with `x` mana. Requires `x` mana, consumes `x-1` mana.<br/>Can also use `↤` `↦` `↥` `↧` |
 | `T` | Transfer Stack | If this is the only IP on this cell or it has no stack, the IP does nothing and does not advance. Otherwise, it pops a value `x` (cast to int), then pops `x` items off its own stack and transfers these values to *all* other IPs on this cell (they end up in the same order they were originally in). Stack underflow still transfers the items that did exist (although the source IP is still terminated). After a transfer has occurred, held IPs will 'skip', allowing them to advance next cycle. Note that if IPs are facing the same direction, they will be merged. See also the Swap modifier |
 | `B` | Branch | Pops `y` and `x` from the stack and causes the IP to jump to the position `(x,y)` on the program grid and continue executing from there. The coordinates of the return point (where the IP would have been if it had not jumped) are pushed to the top of the stack. If a direction modifier is applied to this rune, it takes effect before the jump. This effectively allows for the creation of functions. See also the directional modifiers. |
-| `E` | Eval | Pops `x`, if `x` is a string it is executed as if it was a Runic program. This IP is frozen in place until the Eval context terminates (each update tick the IP recieves causes 1 update tick in the Eval context). Costs an amount of mana equal to `ln(size-5)^2`, where `size` is the length of the string to be Evaluated (min 0). See also the Swap modifier.<br/> If `x` is a number, it is used to push a string from the Dictionary |
-| `w` | Write | Aka reflection. Pops a char `c`, and values `y`, and `x` from the stack and writes `c` to the program grid at `(x,y)`. If `x` and `y` are not both value types (or don't exist), the IP's own location is used, and `x` and `y` are returned to the stack (if they exist). If `c` is a modifier (see below) it is written to the modifier grid instead of the execution grid. Costs 1 mana.
+| `E` | Eval | Pops `x`, if `x` is a string it is executed as if it was a Runic program. This IP is frozen in place until the Eval context terminates (each update tick the IP recieves causes 1 update tick in the Eval context). Costs an amount of mana equal to `ln(size-5)^2`, where `size` is the length of the string to be Evaluated (min 0). See also the Swap modifier.<br/> If `x` is a number, it is used to push a string from [the Dictionary](Assets/draco18s/util/WordDictionary.cs) |
+| `w` | Write | AKA reflection. Pops a char `c`, and values `y`, and `x` from the stack and writes `c` to the program grid at `(x,y)`. If `x` and `y` are not both value types (or don't exist), the IP's own location is used, and `x` and `y` are returned to the stack (if they exist). If `c` is a modifier (see below) it is written to the modifier grid instead of the execution grid. Costs 1 mana.
 
 ### Unity specific commands
 These are in flux and will be crushed down into a single command like Math. Modifiers will be pushed to the stack alongside their command counterparts in all three reading modes (in char and char-continuous, it will be pushed as a separate object after the command rune).
@@ -102,7 +102,7 @@ Any attempted pop off of an empty stack terminates the IP.
 
 IPs that advance off the edge of the program (in any direction) are moved to the far edge. In this way `>1$` will print an endless series of `1`s.
 
-Programs are terminated after 10000 execution steps in the event of infinite loops.
+Programs are terminated after 100000 execution steps in the event of infinite loops.
 
 ## Sample programs:
 

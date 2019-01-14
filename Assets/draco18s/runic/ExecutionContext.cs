@@ -17,7 +17,7 @@ namespace Assets.draco18s.runic {
 		private List<Pointer> newpointers;
 		private List<Pointer> pointers;
 		private Func<object> inputReader;
-		private Func<object,object> outputWriter;
+		private Action<object> outputWriter;
 
 		public ExecutionContext(IExecutableRune[,] runes, List<Vector2Int> entryPoints, char[,] modifiers, GameObject selfGO) {
 			this.runes = runes;
@@ -26,7 +26,7 @@ namespace Assets.draco18s.runic {
 			self = selfGO;
 		}
 
-		public ExecutionContext SetWriter(Func<object, object> writer) {
+		public ExecutionContext SetWriter(Action<object> writer) {
 			outputWriter = writer;
 			return this;
 		}
@@ -307,7 +307,6 @@ namespace Assets.draco18s.runic {
 				});
 				context.SetWriter((o) => {
 					pointer.Push(o);
-					return o;
 				});
 			}
 			if(err.type != ParseErrorType.NONE || context == null) {

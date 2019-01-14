@@ -21,7 +21,7 @@ namespace Assets.draco18s.runic.runes {
 						pointer.Push(s);
 					}
 				}
-				
+
 				char[] c = ((string)o).ToCharArray();
 				for(int i = 0; i < c.Length; i++) {
 					pointer.Push(c[i]);

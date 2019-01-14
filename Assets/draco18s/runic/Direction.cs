@@ -13,6 +13,7 @@
 			}
 			return 0;
 		}
+
 		public static int GetY(Direction d) {
 			if(d == Direction.UP) {
 				return -1;
@@ -22,12 +23,14 @@
 			}
 			return 0;
 		}
+
 		public static Direction Reflect(Direction d) {
 			if((int)d % 2 == 0) {
 				return d + 1;
 			}
 			return d - 1;
 		}
+
 		public static Direction RotateCW(Direction d) {
 			switch(d) {
 				case Direction.DOWN:
@@ -41,6 +44,7 @@
 			}
 			return d;
 		}
+
 		public static Direction RotateCCW(Direction d) {
 			switch(d) {
 				case Direction.DOWN:

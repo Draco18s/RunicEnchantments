@@ -1,11 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Assets.draco18s.util {
+	/// <summary>
+	/// <para>How to use this file:</para>
+	/// <para>Take the file line number of the desired word, subtract 10 (because "the" appears on line 10), and that's its lookup index. Word to index (`n`) and index to word (`E`) commands are both available.</para>
+	/// </summary>
 	public static class WordDictionary {
-		private static string[] list = {
+		static string[] list = {
 					"the",
 					"of",
 					"and",

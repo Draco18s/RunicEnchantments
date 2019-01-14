@@ -15,6 +15,12 @@ namespace Assets.draco18s.runic.runes {
 				char c = (char)i;
 				pointer.Push(c);
 			}
+			else if(o is string) {
+				string s = (string)o;
+				if(s.Length == 1) {
+					pointer.Push(s[0]);
+				}
+			}
 			return true;
 		}
 

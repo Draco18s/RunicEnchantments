@@ -144,9 +144,8 @@ namespace Assets.draco18s.runic {
 			return null;
 		}
 
-		public static object DefaultWriter(object o) {
+		public static void DefaultWriter(object o) {
 			Debug.Log(o);
-			return o;
 		}
 
 		private static char Read() {

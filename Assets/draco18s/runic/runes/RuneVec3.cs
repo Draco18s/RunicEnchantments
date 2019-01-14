@@ -10,12 +10,14 @@ namespace Assets.draco18s.runic.runes {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
 			object c = pointer.Pop();
-			if(a is ValueType && b is ValueType && c is ValueType) {
-				float x = (float)Convert.ToDouble(a);
-				float y = (float)Convert.ToDouble(b);
-				float z = (float)Convert.ToDouble(c);
-				pointer.Push(new Vector3(x, y, z));
-			}
+			float x = 0, y = 0, z = 0;
+			if(a is ValueType)
+				x = (float)Convert.ToDouble(a);
+			if(b is ValueType)
+				y = (float)Convert.ToDouble(b);
+			if(c is ValueType)
+				z = (float)Convert.ToDouble(c);
+			pointer.Push(new Vector3(x, y, z));
 			return true;
 		}
 
