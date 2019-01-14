@@ -18,7 +18,7 @@ namespace Assets.draco18s.runic.runes {
 					}
 					else {
 						double d = MathHelper.GetValue((ValueType)a);
-						if(Math.Abs(d) < Mathf.Epsilon) {
+						if(Mathf.Approximately((float)d, 0)) {
 							pointer.DeductMana(pointer.GetMana());
 							return true;
 						}

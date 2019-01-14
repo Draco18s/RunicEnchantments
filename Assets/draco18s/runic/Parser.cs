@@ -130,16 +130,16 @@ namespace Assets.draco18s.runic {
 			double d;
 			string s = sb.ToString();
 			if(double.TryParse(s, out d)) {
-				if(Math.Abs(d - (int)d) < Mathf.Epsilon) {
+				if(Mathf.Approximately((float)d, (int)d)) {
 					return (int)d;
 				}
 				return (d);
 			}
 			else if(sb.Length > 1) {
-				return (s);
+				return s;
 			}
 			else if(sb.Length > 0) {
-				return (s[0]);
+				return s[0];
 			}
 			return null;
 		}

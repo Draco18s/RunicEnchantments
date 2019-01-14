@@ -22,7 +22,7 @@ namespace Assets.draco18s.runic.runes {
 					pointer.DeductMana(d - 1);
 					Pointer ptr = new Pointer(d, dir, pointer.position);
 					char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
-					if(modifier == '͍' || modifier == '̹' || modifier == '͗') {
+					if(modifier == '͍') {
 						List<object> items = new List<object>();
 						while(pointer.GetStackSize() > 0) {
 							items.Add(pointer.Pop());

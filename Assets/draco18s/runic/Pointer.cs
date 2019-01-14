@@ -12,7 +12,6 @@ namespace Assets.draco18s.runic {
 		protected ReadType readType = ReadType.EXECUTE;
 
 		protected List<object> stack;
-
 		protected List<List<object>> substacks;
 
 		public Vector2Int position;
@@ -41,7 +40,6 @@ namespace Assets.draco18s.runic {
 		public void Push(object o) {
 			stack.Add(o);
 		}
-
 
 		public object Pop() {
 			if(stack.Count > 0) {

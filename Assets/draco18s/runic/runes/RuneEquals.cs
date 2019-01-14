@@ -1,4 +1,6 @@
 ﻿using Assets.draco18s.runic.init;
+using Assets.draco18s.util;
+using System;
 using UnityEngine;
 
 namespace Assets.draco18s.runic.runes {
@@ -6,7 +8,12 @@ namespace Assets.draco18s.runic.runes {
 		public bool Execute(Pointer pointer, ExecutionContext context) {
 			object a = pointer.Pop();
 			object b = pointer.Pop();
-			bool r = a.Equals(b);
+			bool r;
+			if(a == null && b == null) r = true;
+			if(a == null || b == null) r = false;
+			if(a is ValueType && b is ValueType) r = MathHelper.NumericRelationship.EqualTo == MathHelper.Compare((ValueType)a, (ValueType)b);
+			else r = a.Equals(b);
+
 			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
 			if(modifier == '̸' || modifier == '͍') {
 				r = !r;

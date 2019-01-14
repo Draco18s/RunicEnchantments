@@ -65,7 +65,7 @@ namespace Assets.draco18s.runic {
 		public bool Tick() {
 			pointers.RemoveAll(x => x.GetMana() <= 0);
 			foreach(Pointer pointer in pointers) {
-				bool alreadySkipping = pointer.GetDelayAmt()>0;
+				bool delaying = pointer.GetDelayAmt()>0;
 				bool skipping = pointer.isSkipping(true);
 				pointer.Execute();
 				if(pointer.GetReadType() == Pointer.ReadType.EXECUTE) {
@@ -73,7 +73,7 @@ namespace Assets.draco18s.runic {
 						pointer.DeductMana(pointer.GetMana());
 					}
 					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
-						AdvancePointer(pointer,!alreadySkipping && !skipping);
+						AdvancePointer(pointer,!delaying && !skipping);
 					}
 				}
 				else if(pointer.GetReadType() == Pointer.ReadType.READ_NUM) {
@@ -332,7 +332,7 @@ namespace Assets.draco18s.runic {
 			outputWriter(o);
 		}
 
-		internal void SetRune(int x, int y, char c) {
+		public void SetRune(int x, int y, char c) {
 			IExecutableRune r = RuneRegistry.GetRune(c);
 			if(r == null) {
 				runes[x, y] = new RuneCharLiteral(c);
@@ -343,7 +343,7 @@ namespace Assets.draco18s.runic {
 			GameObject.Find("Canvas").GetComponent<SceneUI>().UpdateText(x,y,c);
 		}
 
-		internal void SetModifier(int x, int y, char c) {
+		public void SetModifier(int x, int y, char c) {
 			modifiers[x, y] = c;
 		}
 	}

@@ -39,7 +39,7 @@ namespace Assets.draco18s.runic.runes {
 					}
 					else {
 						double d = MathHelper.GetValue((ValueType)a);
-						if(d == 0) {
+						if(Mathf.Approximately((float)d,0)) {
 							pointer.DeductMana(pointer.GetMana());
 							return true;
 						}
