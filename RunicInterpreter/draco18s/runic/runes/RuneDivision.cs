@@ -23,8 +23,8 @@ namespace RunicInterpreter.draco18s.runic.runes {
 						else if(a is Vector3) {
 							double d = MathHelper.GetValue((ValueType)b);
 							if(MathHelper.Approximately((float)d, 0)) {
-								//pointer.DeductMana(pointer.GetMana());
-								//return true;
+								pointer.DeductMana(pointer.GetMana());
+								return true;
 							}
 							pointer.Push(((Vector3)a) / (float)d);
 						}
@@ -40,8 +40,8 @@ namespace RunicInterpreter.draco18s.runic.runes {
 					else {
 						double d = MathHelper.GetValue((ValueType)a);
 						if(MathHelper.Approximately((float)d, 0)) {
-							//pointer.DeductMana(pointer.GetMana());
-							//return true;
+							pointer.DeductMana(pointer.GetMana());
+							return true;
 						}
 						double c = MathHelper.GetValue((ValueType)b) / d;
 						pointer.Push(c);

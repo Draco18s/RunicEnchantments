@@ -135,9 +135,9 @@ namespace RunicInterpreter.draco18s.runic {
 			return null;
 		}
 
-		public static object DefaultWriter(object o) {
+		public static void DefaultWriter(object o) {
 			Console.Out.Write(o);
-			return o;
+
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace RunicInterpreter.draco18s.runic {
 		private List<Pointer> newpointers;
 		private List<Pointer> pointers;
 		private Func<object> inputReader;
-		private Func<object,object> outputWriter;
+		private Action<object> outputWriter;
 
 		public ExecutionContext(IExecutableRune[,] runes, List<Vector2Int> entryPoints, char[,] modifiers) {
 			this.runes = runes;
@@ -25,7 +25,7 @@ namespace RunicInterpreter.draco18s.runic {
 			this.modifiers = modifiers;
 		}
 
-		public ExecutionContext SetWriter(Func<object, object> writer) {
+		public ExecutionContext SetWriter(Action<object> writer) {
 			outputWriter = writer;
 			return this;
 		}
@@ -306,7 +306,6 @@ namespace RunicInterpreter.draco18s.runic {
 				});
 				context.SetWriter((o) => {
 					pointer.Push(o);
-					return o;
 				});
 			}
 			if(err.type != ParseErrorType.NONE || context == null) {
