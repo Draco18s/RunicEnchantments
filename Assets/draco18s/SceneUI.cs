@@ -191,7 +191,7 @@ public class SceneUI : MonoBehaviour {
 
 		string[] s = r.Split('\n');
 		char[] cc = s[y].ToCharArray();
-		cc[x] = c;
+		cc[x] = c=='\n'? '¶':c;
 		s[y] = cc.ArrayToString();
 		r = string.Join("\n", s);
 

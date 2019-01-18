@@ -16,7 +16,7 @@ namespace Assets.draco18s.runic.runes {
 						pointer.Push(c);
 					}
 					else if(a is Vector3 && b is Vector3) {
-						pointer.Push(((Vector3)b - (Vector3)a));
+						pointer.Push((Vector3)b - (Vector3)a);
 					}
 					else {
 						double c = MathHelper.GetValue((ValueType)b) - MathHelper.GetValue((ValueType)a);
@@ -32,7 +32,6 @@ namespace Assets.draco18s.runic.runes {
 					}
 					else if(n < 0) {
 						n *= -1;
-						string first = s.Substring(0, n);
 						string second = s.Substring(n, s.Length - n);
 						pointer.Push(second);
 					}
