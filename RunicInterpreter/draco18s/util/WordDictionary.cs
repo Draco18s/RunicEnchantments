@@ -9,7 +9,7 @@ namespace RunicInterpreter.draco18s.util {
 	/// <para>Take the file line number of the desired word, subtract 10 (because "the" appears on line 10), and that's its lookup index. Word to index (`n`) and index to word (`E`) commands are both available.</para>
 	/// </summary>
 	public static class WordDictionary {
-		static string[] list = {
+		private static string[] list = {
 					"the",
 					"of",
 					"and",

@@ -18,6 +18,10 @@ namespace RunicInterpreter.draco18s.runic.runes {
 					pointer.Push(pointer.position.x);
 					pointer.Push(pointer.position.y);
 				}
+				if(!context.IsValidPos(x, y)) {
+					pointer.DeductMana(pointer.GetMana());
+					return true;
+				}
 				pointer.position = new Vector2Int(x, y);
 				pointer.direction = context.GetModifiedDirection(modifier, pointer.direction);
 				return false;

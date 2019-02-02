@@ -88,6 +88,7 @@
     <Compile Include="draco18s\runic\runes\RuneReadChar.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadCharContinuous.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadInput.cs" />
+    <Compile Include="draco18s\runic\runes\RuneReadNumber.cs" />
     <Compile Include="draco18s\runic\runes\RuneReadString.cs" />
     <Compile Include="draco18s\runic\runes\RuneReflectAll.cs" />
     <Compile Include="draco18s\runic\runes\RuneReflection.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="draco18s\util\Coroutine.cs" />
     <Compile Include="draco18s\util\MathHelper.cs" />
     <Compile Include="draco18s\util\TypeExtentions.cs" />
+    <Compile Include="draco18s\util\WordDictionary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

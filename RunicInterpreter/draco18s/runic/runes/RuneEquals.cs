@@ -1,4 +1,6 @@
 ﻿using RunicInterpreter.draco18s.runic.init;
+using RunicInterpreter.draco18s.util;
+using System;
 
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneEquals : IExecutableRune {

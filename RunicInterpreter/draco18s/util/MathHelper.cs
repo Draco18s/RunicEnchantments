@@ -32,7 +32,7 @@ namespace RunicInterpreter.draco18s.util {
 		}
 
 		public static bool Approximately(float a, float b) {
-			return (Math.Abs(a - b) <= 10*float.Epsilon);
+			return (Math.Abs(a - b) <= 10 * float.Epsilon);
 		}
 
 		public static double GetValue(ValueType v1) {

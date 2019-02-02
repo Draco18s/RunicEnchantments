@@ -158,6 +158,23 @@ namespace RunicInterpreter.draco18s.runic {
 			return null;
 		}
 
+		public void CloneTopSubStack() {
+			List<object> newStack = new List<object>();
+			int size = GetStackSize();
+			while(size-- > 0) {
+				object o = Pop();
+				newStack.Add(o);
+			}
+			newStack.Reverse();
+			for(int i = 0; i < newStack.Count; i++) {
+				Push(newStack[i]);
+			}
+			substacks.Add(stack);
+			stack = newStack;
+			if(size > 0)
+				DeductMana(1);
+		}
+
 		public void Execute() {
 			age++;
 			delay = Math.Max(delay-1,0);
