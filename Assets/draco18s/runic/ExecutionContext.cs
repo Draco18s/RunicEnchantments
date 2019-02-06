@@ -31,6 +31,10 @@ namespace Assets.draco18s.runic {
 			return this;
 		}
 
+		public bool IsValidPos(int x, int y) {
+			return x >= 0 && y >= 0 && x < runes.GetLength(0) && y < runes.GetLength(1);
+		}
+
 		public ExecutionContext SetReader(Func<object> reader) {
 			inputReader = reader;
 			return this;
@@ -195,6 +199,10 @@ namespace Assets.draco18s.runic {
 
 		public char GetModifier(int x, int y) {
 			return modifiers[x, y];
+		}
+
+		public char GetRune(int x, int y) {
+			return RuneRegistry.GetRuneChar(runes[x, y]);
 		}
 
 		public void AdvancePointer(Pointer pointer, bool readDelayModifier) {
