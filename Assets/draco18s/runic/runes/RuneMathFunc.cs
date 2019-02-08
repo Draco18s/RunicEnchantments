@@ -36,7 +36,7 @@ namespace Assets.draco18s.runic.runes {
 						pointer.Push(Math.Ceiling(x));
 						break;
 					case 'r':
-						pointer.Push(Math.Round(x));
+						pointer.Push(Math.Round(x + float.Epsilon));
 						break;
 					case '|':
 						pointer.Push(Math.Abs(x));

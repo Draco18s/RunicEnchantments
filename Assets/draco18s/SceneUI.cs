@@ -93,7 +93,7 @@ public class SceneUI : MonoBehaviour {
 			if(doDebug)
 				UpdateDebugGraphics(context);
 			yield return (doDebug ? new WaitForSeconds(.5f) : null);
-		} while(continueExecuting && counter < 10000);
+		} while(continueExecuting && counter < 100000);
 		transform.Find("Button").gameObject.GetComponent<Button>().interactable = true;
 		transform.Find("CodeField").GetComponent<TMP_InputField>().text = code;
 		transform.Find("CodeField/Text Area/markup").GetComponent<TMP_Text>().text = "";
@@ -133,7 +133,7 @@ public class SceneUI : MonoBehaviour {
 				});
 				pointerObjs.Add(p, go);
 			}
-			((RectTransform)go.transform).anchoredPosition = new Vector2(((RectTransform)transform.Find("CodeField")).anchoredPosition.x +13 + 8 * p.position.x + (OffsetForDir(p.direction)), ((RectTransform)transform.Find("CodeField")).anchoredPosition.y - 15 - 18 * p.position.y);
+			((RectTransform)go.transform).anchoredPosition = new Vector2(((RectTransform)transform.Find("CodeField")).anchoredPosition.x +13 + 8.4f * p.position.x + (OffsetForDir(p.direction)), ((RectTransform)transform.Find("CodeField")).anchoredPosition.y - 15 - 17.5f * p.position.y);
 			go.transform.localRotation = Quaternion.Euler(0, 0, RotationForDir(p.direction));
 		}
 		IEnumerable<KeyValuePair<Pointer, GameObject>> dead = pointerObjs.Where(x => x.Key.GetMana() <= 0);
