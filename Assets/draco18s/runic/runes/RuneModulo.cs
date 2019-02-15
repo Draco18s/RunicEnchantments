@@ -13,6 +13,11 @@ namespace Assets.draco18s.runic.runes {
 			if(a != null && b != null) {
 				if(a is ValueType && b is ValueType) {
 					if(MathHelper.IsInteger((ValueType)a) && MathHelper.IsInteger((ValueType)b)) {
+						double d = MathHelper.GetValue((ValueType)a);
+						if(Mathf.Approximately((float)d, 0)) {
+							pointer.DeductMana(pointer.GetMana());
+							return true;
+						}
 						int c = (int)MathHelper.GetValue((ValueType)b) % (int)MathHelper.GetValue((ValueType)a);
 						pointer.Push(c);
 					}
