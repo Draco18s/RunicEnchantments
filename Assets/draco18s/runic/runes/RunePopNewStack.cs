@@ -12,6 +12,8 @@ namespace Assets.draco18s.runic.runes {
 				ValueType v = (ValueType)o;
 				int d = (int)MathHelper.GetValue(v);
 				pointer.PopNewStack(d);
+				if(d > 0)
+					pointer.DeductMana(1);
 			}
 			else {
 				pointer.Push(o);
