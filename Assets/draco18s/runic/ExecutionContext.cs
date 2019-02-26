@@ -76,7 +76,7 @@ namespace Assets.draco18s.runic {
 					if(pointer.position.x >= runes.GetLength(0) || pointer.position.y >= runes.GetLength(1)) {
 						pointer.DeductMana(pointer.GetMana());
 					}
-					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
+					else if(skipping || delaying || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
 						AdvancePointer(pointer,!delaying && !skipping);
 					}
 				}
@@ -176,7 +176,7 @@ namespace Assets.draco18s.runic {
 				}
 			});
 			pointers.ForEach(x => {
-				if(x.GetStackSize() > x.GetMana()+10) {
+				if(x.GetStackSize() > x.GetMana() + 10) {
 					x.DeductMana(1);
 				}
 			});

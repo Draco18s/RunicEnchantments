@@ -19,7 +19,7 @@ namespace Assets.draco18s.runic {
 				context = null;
 				return new ParseError(ParseErrorType.NO_TERMINATOR, Vector2Int.zero, ';');
 			}
-			code.Replace("\r", String.Empty);
+			code = code.Replace("\r", String.Empty);
 			string[] lines = code.Split('\n');
 			int max = 0;
 			foreach(string s in lines) {
