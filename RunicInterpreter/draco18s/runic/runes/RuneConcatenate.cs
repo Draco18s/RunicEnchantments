@@ -6,26 +6,17 @@ using System.Collections.Generic;
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneConcatenate : IExecutableRune {
 		public bool Execute(Pointer pointer, IRunicContext context) {
-			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);
-			if(modifier == '͍') {
-				StringBuilder result = new StringBuilder();
-				bool cont = false;
-				do {
-					cont = false;
-					if(pointer.GetStackSize() > 0) {
-						object o = pointer.Pop();
-						if(o is char) {
-							result.Insert(0, o.ToString());
-							//result.Append(o.ToString());
-							cont = true;
-						}
-						else {
-							pointer.Push(o);
-						}
-					}
-				} while(cont);
-				if(result.Length > 0)
-					pointer.Push(result.ToString());
+			if(context.GetModifier(pointer.position.x,pointer.position.y) == '͍') {
+				string result = "";
+				object o = pointer.Pop();
+				while(o is char && pointer.GetStackSize() > 0) {
+					result += (char)o;
+					o = pointer.Pop();
+				}
+				if(o is char) result += (char)o;
+				else pointer.Push(o);
+				result = result.Reverse();
+				pointer.Push(result);
 			}
 			else {
 				object a = pointer.Pop();
