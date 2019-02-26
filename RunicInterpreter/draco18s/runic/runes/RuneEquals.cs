@@ -9,8 +9,8 @@ namespace RunicInterpreter.draco18s.runic.runes {
 			object b = pointer.Pop();
 			bool r;
 			if(a == null && b == null) r = true;
-			if(a == null || b == null) r = false;
-			if(a is ValueType && b is ValueType) r = MathHelper.NumericRelationship.EqualTo == MathHelper.Compare((ValueType)a, (ValueType)b);
+			else if(a == null || b == null) r = false;
+			else if(a is ValueType && b is ValueType) r = MathHelper.NumericRelationship.EqualTo == MathHelper.Compare((ValueType)a, (ValueType)b);
 			else r = a.Equals(b);
 
 			char modifier = context.GetModifier(pointer.position.x, pointer.position.y);

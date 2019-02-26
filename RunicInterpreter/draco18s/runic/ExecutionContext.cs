@@ -74,7 +74,7 @@ namespace RunicInterpreter.draco18s.runic {
 					if(pointer.position.x >= runes.GetLength(0) || pointer.position.y >= runes.GetLength(1)) {
 						pointer.DeductMana(pointer.GetMana());
 					}
-					else if(skipping || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
+					else if(skipping || delaying || runes[pointer.position.x, pointer.position.y].Execute(pointer, this)) {
 						AdvancePointer(pointer,!delaying && !skipping);
 					}
 				}
