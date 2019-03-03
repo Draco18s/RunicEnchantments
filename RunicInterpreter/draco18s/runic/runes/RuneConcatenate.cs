@@ -1,11 +1,12 @@
 using RunicInterpreter.draco18s.runic.init;
+using RunicInterpreter.draco18s.util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace RunicInterpreter.draco18s.runic.runes {
 	public class RuneConcatenate : IExecutableRune {
-		public bool Execute(Pointer pointer, IRunicContext context) {
+		public bool Execute(Pointer pointer, ExecutionContext context) {
 			if(context.GetModifier(pointer.position.x,pointer.position.y) == '͍') {
 				string result = "";
 				object o = pointer.Pop();
