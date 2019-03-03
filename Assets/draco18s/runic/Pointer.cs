@@ -158,6 +158,15 @@ namespace Assets.draco18s.runic {
 			return null;
 		}
 
+		public void PopDiscardStack() {
+			if(substacks.Count > 0) {
+				List<object> o = substacks[substacks.Count - 1];
+				substacks.RemoveAt(substacks.Count - 1);
+				return;
+			}
+			mana = 0;
+		}
+
 		public void CloneTopSubStack() {
 			List<object> newStack = new List<object>();
 			int size = GetStackSize();

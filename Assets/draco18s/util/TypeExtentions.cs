@@ -39,6 +39,18 @@ namespace Assets.draco18s.util {
 			list.Reverse();
 		}
 
+		public static List<int> AllIndexesOf(this string str, string value) {
+			if(String.IsNullOrEmpty(value))
+				throw new ArgumentException("the string to find may not be empty", "value");
+			List<int> indexes = new List<int>();
+			for(int index = 0; ; index += value.Length) {
+				index = str.IndexOf(value, index);
+				if(index == -1)
+					return indexes;
+				indexes.Add(index);
+			}
+		}
+
 		public static IEnumerable<string> ChunksUpto(this string str, int maxChunkSize) {
 			for(int i = 0; i < str.Length; i += maxChunkSize)
 				yield return str.Substring(i, Math.Min(maxChunkSize, str.Length - i));
