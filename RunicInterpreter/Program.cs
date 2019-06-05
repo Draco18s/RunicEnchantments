@@ -19,7 +19,7 @@ namespace RunicInterpreter {
 			bool keeprunning = true;
 
 			string codeIn = File.ReadAllText(args[0]);
-			//string codeIn = "50,$;";
+			//string codeIn = "i'PA$;";
 			CoroutineHandle handle = runner.Run(Execute(codeIn));
 			while(keeprunning) {
 				float deltaTime = 0.1f;
@@ -44,6 +44,10 @@ namespace RunicInterpreter {
 				continueExecuting = context.Tick();
 				yield return null;
 			} while(continueExecuting && counter < 1000000);
+			/*do {
+				int j = Console.Read();
+				if(j >= 0) break;
+			} while(true);*/
 		}
 
 		private static void ShowError(ParseError err) {
