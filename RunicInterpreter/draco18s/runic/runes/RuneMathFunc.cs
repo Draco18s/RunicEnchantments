@@ -122,6 +122,8 @@ namespace RunicInterpreter.draco18s.runic.runes {
 			for(int i = 5; i <= sq; i += 6) {
 				if(number % i == 0)
 					return false;
+				if(number % (i+2) == 0)
+					return false;
 			}
 			return true;
 		}
