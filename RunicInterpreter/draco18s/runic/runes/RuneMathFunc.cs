@@ -104,6 +104,12 @@ namespace RunicInterpreter.draco18s.runic.runes {
 					case 'P':
 						pointer.Push(IsPrime((int)x) ? 1 : 0);
 						break;
+					case '-':
+						pointer.Push(Math.Sign(x));
+						break;
+					case '.':
+						pointer.Push(Math.Truncate(x));
+						break;
 				}
 			}
 			return true;
