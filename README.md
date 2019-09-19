@@ -2,7 +2,7 @@
 
 Runic script is a 2D interpreted language with multiple simultaneously processed instruction pointers. Each instruction pointer (IP) is spawned at an entry point with a mana ("energy") value, a direction, and an empty stack. Each cycle each IP (in order of creation) executes the instuction under itself and then moves forwards. If the instruction requires a quantity of mana and the IP does not have that much, then the update is treated as a NOP and the IP is not advanced.
 
-At the end of each update the following actiosn are performed (in order):
+At the end of each update the following actions are performed (in order):
 
  - Any pointers that exist in the same cell and have the same facing are merged: The older one retains its stack and gains the mana of the newer one, which is then destroyed.
  
