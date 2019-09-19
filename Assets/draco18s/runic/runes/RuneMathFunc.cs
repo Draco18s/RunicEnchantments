@@ -108,7 +108,7 @@ namespace Assets.draco18s.runic.runes {
 		private bool IsPrime(int number) {
 			if(number < 2)
 				return false;
-			if(number == 2)
+			if(number == 2 || number == 3)
 				return true;
 			if(number % 2 == 0)
 				return false;
